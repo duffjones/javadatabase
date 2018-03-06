@@ -1,0 +1,51 @@
+import java.util.*;
+
+public class Record {
+	
+   public static void main(String args[]) {
+	   
+      /*Creation of ArrayList: I'm going to add String
+       *elements so I made it of string type */
+	  ArrayList<String> field = new ArrayList<String>();
+
+	  /*This is how elements should be added to the array list*/
+	  field.add("ID, 1, 2, 3");
+	  field.add("Name, Fido, Wanda, Garfield");
+	  field.add("Kind, dog, fish, cat");
+	  field.add("Owner, ab123, ef789, ab123");
+
+	  /* Displaying array list elements */
+	  System.out.println("Currently the array list has following elements:"+field);
+	  System.out.println("Field:"+field.get(0)+"Contains" + field.get(1));
+
+	  /*Remove elements from array list like this*/
+
+	  field.remove("Harry");
+	  
+
+	  System.out.println("Current array list is:"+field);
+
+	  /*Remove element from the given index*/
+	  field.remove(1);
+
+	  System.out.println("Current array list is:"+field);
+   }
+   
+   void fieldNameAdd(String fadd, ArrayList<String> field) {
+	   field.add(0, fadd);
+   }
+   
+   void fieldAdd(String fadd, ArrayList<String> field) {
+	   field.add(fadd);
+   }
+   
+   void fieldRemove(String fadd, ArrayList<String> field) {
+	   field.remove(fadd);
+   }
+   
+   void fieldPrint(ArrayList<String> field, int fieldnum) {
+	   System.out.print("Field:"+field.get(fieldnum-1));
+   }
+   
+   
+}
