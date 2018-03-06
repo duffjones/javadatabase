@@ -4,9 +4,6 @@ import java.util.List;
 class Row {
 
 	private String[] field;
-	//private String[] header;
-	//private int headersize; 
-	
 
 	String[] field() {
 		return field;
