@@ -1,29 +1,28 @@
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+
 
 class Row {
-	
-	private ArrayList<String> row; 
-	
-	Row(){
-	row = createRow();
-	}
-	
-	ArrayList<String> getRow(){return row; }
-	
-	ArrayList<String> createRow(String[] fieldy) {
-	  ArrayList<String> row = new ArrayList<String>();
-	  Collections.addAll(row, fieldy);
-	  return row; 
-}
 
-    void printRow(ArrayList<String> row) {
-    	
-        for (int i = 0; i < row.size(); i++) {
-            String value = row.get(i);
-            System.out.println("Row Element: " + value);
-        }
+    private String[] field;
+
+    String[] field(){
+    	return field; 
     }
 	
-	
+    Row(String[] data) {
+        field = data;
+        
+    }
 
+    int rowCount(){
+    	int count = field.length; 
+    return count; 	
+    }
+    
+    void rowChange(int element, String string) {
+    	field[element] = string;  
+    	
+    }
+    
 }

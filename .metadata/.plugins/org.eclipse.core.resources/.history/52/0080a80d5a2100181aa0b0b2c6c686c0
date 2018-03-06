@@ -1,0 +1,31 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+
+class Row {
+
+    private ArrayList<String> field;
+
+    String[] fields(){
+    	
+    	String [] fields = field.toArray(new String[field.size()]);
+    	return fields; 
+    }
+	
+    Row(String[] data) {
+    	Collections.addAll(field, data);
+    }
+
+//    int rowCount(){
+//    	int count = field.length; 
+//    return count; 	
+//    }
+    
+    void rowAdd(String element) {
+    	field.add(element); 
+    	
+    }
+    
+}

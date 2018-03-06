@@ -3,37 +3,54 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class Table {
-	ArrayList<String> table;
+	private ArrayList<String> tabledata;
+	
+	ArrayList<String> getTable(){ return tabledata;}
+	
 
     Table(String[] columnTitles) {
 
-    	table = new ArrayList<String>();
-    	//ArrayList<String> header = Row.createRow(columnTitles);
-    	Collections.addAll(table, columnTitles);
-    	//System.out.println("header");
-    	printTable(table);
+    	tabledata = new ArrayList<String>();
+    	Collections.addAll(tabledata, columnTitles);
+    	tableTest(tabledata);
     	
  }
     
+void tableTest(ArrayList<String> tabledata){
+	String[] ttstring = {"AA","BB","BB"};
+	Collections.addAll(tabledata, ttstring);
+	addRow(tabledata, ttstring);
+	printTable(tabledata);
+	
+	
+}
 
+void addRow(ArrayList<String> tabledata, String[] rowdata){
+	Collections.addAll(tabledata, rowdata);
+}
+
+
+
+
+    
     void printTable(ArrayList<String> table) {
     	
         for (int i = 0; i < table.size(); i++) {
             String value = table.get(i);
-            System.out.println("Element: " + value);
+            System.out.print("Element: " + value);
+            System.out.println();
         }
 
-    	//System.out.println(Arrays.toString(houseAddress));
     }
     
-    
+   
     
     public static void main(String[] args) {
        
     	String[] myStringArray = {"a","b","c"};
-    	Table newtable = new Table(myStringArray);
-    	//System.out.print(newtable);
-    	//printTable(newtable);
+    	Row newrow = new Row(myStringArray);
+    	Table newtable = new Table(newrow.field());
+    	
     }
 
 }
