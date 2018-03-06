@@ -1,0 +1,16 @@
+import java.util.ArrayList;
+
+public class Table {
+
+    Table(String[] columnTitles) {
+        for (int i = columnTitles.length - 1; i >= 1; i -= 1) {
+            for (int j = i - 1; j >= 0; j -= 1) {
+                if (columnTitles[i].equals(columnTitles[j])) {
+                	System.out.print("Duplicate Columns");
+                }
+            }
+        }
+        Row header = new Row(columnTitles);
+    }
+
+}

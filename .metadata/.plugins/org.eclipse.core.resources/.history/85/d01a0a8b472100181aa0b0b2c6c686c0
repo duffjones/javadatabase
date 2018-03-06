@@ -1,0 +1,12 @@
+import java.util.*;
+
+class Row {
+	
+  void createRow(String[] fieldy) {
+	  ArrayList<String> row = new ArrayList<String>();
+	  Collections.addAll(row, fieldy);
+}
+
+
+
+}

@@ -1,0 +1,28 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Table {
+
+    Table(String[] columnTitles) {
+
+    	Row header = new Row(columnTitles);
+    	System.out.println("header");
+    	printRow(header);
+ }
+    
+
+    void printRow(Row row) {
+    	System.out.print(row);
+    }
+    
+    
+    
+    public static void main(String[] args) {
+       
+    	String[] myStringArray = {"a","b","c"};
+    	Table newtable = new Table(myStringArray);
+    	System.out.print(newtable);
+    }
+
+}
+

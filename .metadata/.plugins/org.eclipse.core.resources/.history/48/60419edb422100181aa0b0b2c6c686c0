@@ -1,0 +1,24 @@
+import java.util.*;
+
+class Row {
+	
+   Row(String[] field) {
+	  ArrayList<String> row = new ArrayList<String>();
+	  row.add(field[0]);
+	  
+   }
+   
+    void rowAdd(String fadd, ArrayList<String> row) {
+	   row.add(fadd);
+   }
+   
+   void rowRemove(String fadd, ArrayList<String> row) {
+	   row.remove(fadd);
+   }
+   
+   void rowPrint(ArrayList<String> row, int rownum) {
+	   System.out.print("row:"+row.get(rownum-1));
+   }
+   
+   
+}
