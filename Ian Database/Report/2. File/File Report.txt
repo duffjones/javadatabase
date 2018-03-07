@@ -1,0 +1,10 @@
+Writing and Reading from a file was relatively simple for me to implement. 
+
+I had to chose between serialization and standard file writing. File writing has the advantage of being readable in plain text, but is more complicated to execute line by line, takes longer, creates larger files, and stops anonymity. I chose serialization since it is faster, private, and takes up less space (important for large databases). 
+
+I put two functions into Table.class: one for writing, and another for deserialization. 
+
+I have a working prototype right now, but moving forward I would like to add: 
+-Code that checks for existing .ser files, and creates a new one if the existing name is already created. 
+-Code allowing for an arg to set the title of the saved table. 
+-Code thats saves existing table objects when the program is closed. 

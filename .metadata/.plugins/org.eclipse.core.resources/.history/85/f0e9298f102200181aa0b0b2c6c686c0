@@ -1,0 +1,121 @@
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+public class Table {
+	private ArrayList<String> tabledata;
+	
+	ArrayList<String> getTable(){ return tabledata;}
+	
+
+    Table(String[] columnTitles) {
+
+    	tabledata = new ArrayList<String>();
+    	Collections.addAll(tabledata, columnTitles);
+    	tableTest(tabledata);
+    	
+ }
+    
+void tableTest(ArrayList<String> tabledata){
+	String[] ttstring = {"AA","BB","BB"};
+	Collections.addAll(tabledata, ttstring);
+	addRow(tabledata, ttstring);
+	printTable(tabledata);
+	printTwo(tabledata);
+	
+	
+	
+}
+
+void printTableFile(ArrayList<String> table){
+	
+
+    // The name of the file to open.
+    String fileName = "C:\\Users\\Trevor\\Desktop\\Java Database\\javadatabase\\Ian Database\\src\\Files\\testfiles.txt";
+
+    try {
+        // Assume default encoding.
+        FileWriter fileWriter =
+            new FileWriter(fileName);
+
+        // Always wrap FileWriter in BufferedWriter.
+        BufferedWriter bufferedWriter =
+            new BufferedWriter(fileWriter);
+
+        // Note that write() does not automatically
+        // append a newline character.
+        bufferedWriter.write(table);
+
+        // Always close files.
+        bufferedWriter.close();
+    }
+    catch(IOException ex) {
+        System.out.println(
+            "Error writing to file '"
+            + fileName + "'");
+        // Or we could just do this:
+        // ex.printStackTrace();
+    }
+}
+
+
+void printTwo(ArrayList<String> table) {
+
+
+	      
+	      try {
+	         FileOutputStream fileOut =
+	         new FileOutputStream("C:\\Users\\Trevor\\Desktop\\Java Database\\javadatabase\\Ian Database\\src\\Files");
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	         out.writeObject(table);
+	         out.close();
+	         fileOut.close();
+	         System.out.printf("Serialized data is saved in /tmp/employee.ser");
+	      } catch (IOException i) {
+	         i.printStackTrace();
+	      }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+void addRow(ArrayList<String> tabledata, String[] rowdata){
+	Collections.addAll(tabledata, rowdata);
+}
+
+
+void printTable(ArrayList<String> table) {
+    	
+        for (int i = 0; i < table.size(); i++) {
+            String value = table.get(i);
+            System.out.print("Element: " + value);
+            System.out.println();
+        }
+
+}
+    
+   
+    public static void main(String[] args) {
+       
+    	String[] myStringArray = {"a","b","c"};
+    	Row newrow = new Row(myStringArray);
+    	Table newtable = new Table(newrow.field());
+    	
+    	
+    }
+
+}
+

@@ -1,0 +1,57 @@
+import java.io.*;
+import java.util.ArrayList;
+
+public class File {
+	
+	
+	void printTwo(Table table) {
+
+
+	      
+	      try {
+	         FileOutputStream fileOut =
+	         new FileOutputStream("C:\\Users\\Trevor\\Desktop\\Java Database\\javadatabase\\Ian Database\\src\\Files\\testfiles.ser");
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	         out.writeObject(table);
+	         out.close();
+	         fileOut.close();
+	         System.out.printf("Serialized data is saved in /tmp/employee.ser");
+	      } catch (IOException i) {
+	         i.printStackTrace();
+	      }
+}
+
+
+
+ void deserialize() {
+    Table e = null;
+    try {
+       FileInputStream fileIn = new FileInputStream("C:\\\\Users\\\\Trevor\\\\Desktop\\\\Java Database\\\\javadatabase\\\\Ian Database\\\\src\\\\Files\\\\testfiles.ser");
+       ObjectInputStream in = new ObjectInputStream(fileIn);
+       e = (Table) in.readObject();
+       in.close();
+       fileIn.close();
+    } catch (IOException i) {
+       i.printStackTrace();
+       return;
+    } catch (ClassNotFoundException c) {
+       System.out.println("Employee class not found");
+       c.printStackTrace();
+       return;
+    }
+    
+    System.out.println("Deserialized Employee...");
+    System.out.println("Tabledata: " + e.tabledata);
+
+ }
+
+	
+	
+	
+	
+	
+	
+//    public static void main(Table table) {
+//    }
+}
+

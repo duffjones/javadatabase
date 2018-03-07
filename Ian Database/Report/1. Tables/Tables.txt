@@ -1,0 +1,14 @@
+
+The biggest challenge trying to implement tables was deciding for way to store my array of objects. The big choice seems to be between hashing and ArrayList. ArrayList functions more like a stack, and can increase processing time, especially in the case of a large database. Hashing seems stronger, allowing for quicker searches on large databases, but it is very memory intensive. I also find it harder to implement and understand. Eventually I settled on ArrayList because getting it running was quicker, but I imagine I may have to restructure the entire thing when it comes to "Keys". I think there might be a way to correlate my search key for the database, with the hash key, which would be really handy. 
+
+Regardless, In the spirit of the assignment, I am going to pretend I have no knowledge of future tasks and make the "mistake" of chosing ArrayList. 
+
+Starting Tables, a big roadblock I ran into was handling passing data between String[], which I use for Record/Row, and ArrayList. This mostly came down to my own inexperience. I eventually sorted it out with some get functions, and the built in functions for handling ArrayList with Collections. 
+
+Testing was also tough at first, as I'm still learning. I had difficulties running test functions from Main due to main being Static. Some restructuring of my test functions, as well as the addition of a Run() and Test() function that seemed to abstract things enough to avoid problems with Static variables. I need to look into this more as I study Java. 
+
+For testing, I also decided to skip forward a bit and come up with a way to print to terminal, to check that values were being stored correctly in Row, which in turn is stored in Table. I tried printing in the style of a 2D array, using a nested for loop, which was difficult with two types. Eventually this was solved when I found System.out.println(Arrays.toString(row)).
+
+Intitially I planned on storing the "Header" Row, which stores field names, in the Row class. Moving onto Tables, I realized it might be better stored in tables, where its size can be used to constrain other rows created in that table -- I know this comes in later sections, but it seemed reasonable to consider the problem now. 
+
+

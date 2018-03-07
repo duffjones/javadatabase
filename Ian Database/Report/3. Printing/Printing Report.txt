@@ -1,0 +1,17 @@
+Printing was easy as I already had a rudimentary printing function that created a list of all fields in a table. In order to format it so that rows are horizontal and columns are vertical, I added an if condition to my printing for loop that creates a new line after a certain amount of fields have been printed. That number is determined by the header size, which is saved as an int when the first row is passed to a table. 
+
+This created some padding issues when one element had a longer name than others. Fixing this is done with padding added in the Java Print Format function: System.out.printf(" %10s", value);
+
+RESULT:
+
+Serialized data is saved in src\FilesTabledata: [ID, NAME, KIND, Owner, 1, Fido, dog, ab123, 2, Wanda, fish, ef789, 3, Garfield, cat, ab123]
+         ID       NAME       KIND      Owner
+          1       Fido        dog      ab123
+          2      Wanda       fish      ef789
+          3   Garfield        cat      ab123
+
+
+
+
+This could be made dynamic by checking the length of all elements in the table, and making the padding equal to the length of the longest word. However, 10 spaces is working well for me now. I may return and add that feature. 
+

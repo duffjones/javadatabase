@@ -1,0 +1,53 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+public class Table {
+	private ArrayList<String> tabledata;
+	
+	ArrayList<String> getTable(){ return tabledata;}
+	
+
+    Table(String[] columnTitles) {
+
+    	tabledata = new ArrayList<String>();
+    	Collections.addAll(tabledata, columnTitles);
+    	tableTest(tabledata);
+    	
+ }
+    
+void tableTest(ArrayList<String> tabledata){
+	String[] ttstring = {"AA","BB","BB"};
+	Collections.addAll(tabledata, ttstring);
+	addRow(tabledata, ttstring);
+	printTable(tabledata);
+	
+	
+}
+
+void addRow(ArrayList<String> tabledata, String[] rowdata){
+	Collections.addAll(tabledata, rowdata);
+}
+
+
+void printTable(ArrayList<String> table) {
+    	
+        for (int i = 0; i < table.size(); i++) {
+            String value = table.get(i);
+            System.out.print("Element: " + value);
+            System.out.println();
+        }
+
+}
+    
+   
+    public static void main(String[] args) {
+       
+    	String[] myStringArray = {"a","b","c"};
+    	Row newrow = new Row(myStringArray);
+    	Table newtable = new Table(newrow.field());
+    	
+    }
+
+}
+

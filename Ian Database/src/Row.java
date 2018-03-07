@@ -1,9 +1,11 @@
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 class Row {
 
 	private String[] field;
+	private int key; 
 	//private String[] header;
 	//private int headersize; 
 	
@@ -12,8 +14,14 @@ class Row {
 		return field;
 	}
 
+	int key() {
+		return key;
+	}
+	
 	Row(String[] data) {
 		field = data;
+		key = genRandom();
+		System.out.println("Key:" + key);
 
 	}
 
@@ -21,6 +29,11 @@ class Row {
 
 	}
 
+	int genRandom(){
+		  return new Random().nextInt(1000);// or may be cache random instance
+		}
+	
+	
 	int rowCount() {
 		int count = field.length;
 		return count;
