@@ -6,44 +6,106 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Table {
 	private ArrayList<String> tabledata;
-	private ArrayList<Integer> keydata; 
+	private ArrayList<Integer> keydata;
 	private int headersize; 
-	
+
 
 	ArrayList<String> getTable() {
 		return tabledata;
 	}
+	
+	ArrayList<Integer> getKey() {
+		return keydata;
+	}
+	
+	int getHeader() {
+		return headersize;
+	}
 
+	
 	Table(String[] columnTitles, boolean header, int key) {
 		tabledata = new ArrayList<String>();
 		Collections.addAll(tabledata, columnTitles);
 		keydata = new ArrayList<Integer>();
 		Collections.addAll(keydata, key);
 		//System.out.printf(" %10s", key);
-		
-		
-		
-		if (header == true) {
-			headersize = columnTitles.length; 
-			System.out.println("Headersize " + headersize);
-		}
+		System.out.println("Headersize " + headersize);
+		headersize = columnTitles.length;
 	}
 
+	
 	void addRow(String[] rowdata) {
-
 		if(rowdata.length > headersize) {
 			//add error
 			System.out.println("Too many elements for header");
 			return;
 		}
-		
+		//System.out.println("Headersize " + getHeader());
 		Row newrow = new Row(rowdata);
 		Collections.addAll(tabledata, newrow.field());
 		Collections.addAll(keydata, newrow.key());
 	}
+	
+	
+	void deleteRowKey(ArrayList<String> tabledata, int keyint, Table table, ArrayList<Integer> key) {
+		
+		 int rownumber = 0; 
+			    for(int i=0; i < key.size(); i++) {
+			        int s = key.get(i);
+			        if (s == keyint)
+			         {
+			            rownumber = i;
+			        }
+			    }
+
+		//System.out.println("Key: " + rownumber);
+		for (int i = 0; i <= headersize; i++) {
+		tabledata.remove(rownumber);
+		}
+		//System.out.println("Headersize " + getHeader());
+	    }
+	
+	
+	void deleteRow(ArrayList<String> tabledata, int rownumber, Table table) {
+		
+       int rowid = rownumber * headersize;
+		 
+		for (int i = 0; i <= headersize; i++) {
+		tabledata.remove(rowid);
+		}
+		System.out.println("Headersize " + getHeader());
+	    }
+
+	
+	void selectRow(ArrayList<String> tabledata, int rownumber, Table table) {
+		//add key selection, that stores key of most recently selected
+	       int rowid = rownumber * table.headersize;
+			 
+			for (int i = 0; i <= headersize; i++) {
+				//System.out.println("Selected Row ID: " + rowid);
+				System.out.println("Selected Row Contains: " + tabledata.get(rowid + i));
+			}
+		    }
+	
+
+	void updateRow(ArrayList<String> tabledata, int rownumber, String[] newrow, Table table) {
+		
+	       int rowid = rownumber * table.headersize;
+			 
+			for (int i = 0; i <= headersize; i++) {
+				//System.out.println("Selected Row ID: " + rowid);
+				System.out.println("Selected Row Contains: " + tabledata.set(rowid + i, newrow[i]));
+			
+			}
+			
+		    }
+	//update
+	
 
 	void tableTest(ArrayList<String> tabledata) {
 		String[] ttstring = { "AA", "BB", "BB" };
@@ -101,7 +163,6 @@ public class Table {
 		newtable.addRow(rowtwo);
 		newtable.addRow(rowthree);
 		newtable.addRow(rowfour);
-
 		return newtable;
 	}
 
@@ -113,10 +174,18 @@ public class Table {
 		printTable(testtable.tabledata, testtable, testtable.keydata);
 		printTable(testtabletwo.tabledata, testtabletwo, testtabletwo.keydata);
 		deserialize();
-
+		//deleteRowKey(testtable.tabledata, 0, testtable, testtable.keydata);
+		selectRow(testtable.tabledata, 2, testtable);
+		String[] rowupdate = { "99", "Turdy", "gargoyle", "ab123" };
+		updateRow(testtable.tabledata, 2, rowupdate, testtable);
+		selectRow(testtable.tabledata, 2, testtable);
+		//deleteRow(testtable.tabledata, 1, testtable);
+		//selectRow(testtable.tabledata, 2, testtable);
+		printTable(testtable.tabledata, testtable, testtable.keydata);
 	}
 
 	void saveTable(ArrayList<String> table) {
+		//should create a new file if one exists with name, or if file is empty. 
 		try {
 			FileOutputStream fileOut = new FileOutputStream(
 					"C:\\Users\\Trevor\\Desktop\\Java Database\\javadatabase\\Ian Database\\src\\Files\\testfiles.ser");
@@ -131,6 +200,7 @@ public class Table {
 	}
 
 	void deserialize() {
+		//currently just prints something, needs to return a table? tabledata?
 		ArrayList<String> e = null;
 		try {
 			FileInputStream fileIn = new FileInputStream(
@@ -160,12 +230,10 @@ public class Table {
 	}
 
 	public static void main(String[] args) {
-
 		String[] myStringArray = { "a", "b", "c" };
 		Row newrow = new Row(myStringArray);
 		Table newtable = new Table(newrow.field(), false, newrow.key());
 		newtable.run(args);
-
 	}
 
 }

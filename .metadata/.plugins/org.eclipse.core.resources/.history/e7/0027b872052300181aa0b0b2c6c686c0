@@ -1,0 +1,47 @@
+
+public class Database {
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+void testCreateDatabase(){
+	String[] myStringArray = { "a", "b", "c" };
+	Row newrow = new Row(myStringArray);
+	Table newtable = new Table(newrow.field(), false, newrow.key());
+	newtable.printTable(newtable.getTable(), newtable, newtable.getKey());
+}
+	
+	
+	
+	
+	
+	
+	
+	
+public static void main(String[] args) {
+    
+	Database database = new Database();
+	database.run(args);
+
+}
+
+private void run(String[] args) {
+	if (args.length == 0) test();
+	
+	else if (args.length >= 1) {
+		System.out.println("creating database");
+	}
+}
+
+void test(){
+
+testCreateDatabase();
+}
+
+}
