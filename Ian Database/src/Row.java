@@ -6,7 +6,6 @@ class Row implements Serializable {
 
 	private String[] field;
 	private String key; 
-	
 
 	String[] field() {return field;}
 	String key() {return key;}
@@ -25,9 +24,10 @@ class Row implements Serializable {
 
 	//Generates a random int for our Key, and converts it to a string. 
 	String genRandom(){
-		int rando = new Random().nextInt(999999)+100000;
-		String randomstr = Integer.toString(rando);
-		  return randomstr;// or may be cache random instance
+		int rando = new Random().nextInt(1000000)+999999;
+		String randomstr = "KEY-";
+		randomstr = randomstr +  Integer.toString(rando);
+		return randomstr;// or may be cache random instance
 		}
 	
 	//Prints a Row with spacing/formatting. 
@@ -64,13 +64,11 @@ class Row implements Serializable {
 		Row newrow = new Row(myStringArray);
 		System.out.println("Creating new row" + Arrays.toString(newrow.field));
 		testPrint(newrow.field);
-
 	}
 
 	void test() {
 		testCreateRow();
 		testPrint(field);
-
 	}
 
 	void run(String[] args) {

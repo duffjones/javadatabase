@@ -1,6 +1,15 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
+//------------------TODO------------------//
+//TABLE
+//create table with headers: 
+//add column
+//multiple records at once?
+//EXTENSION: Journal, Catalogue, User Input
+
+
 public class Database implements Serializable{
 	
 	private ArrayList<Table> tablearray;
@@ -49,7 +58,6 @@ newfile.saveDB(testdatabase);
 loaddatabase = newfile.deserializeDB();
 System.out.println("PRINTING LOADED DATABASE");
 printDatabase(loaddatabase);
-
 }
 	
 
@@ -123,7 +131,6 @@ Table test_Database_3(){
 
 	return newtable;
 }
-
 	
 public static void main(String[] args) {
 	Database database = new Database();
