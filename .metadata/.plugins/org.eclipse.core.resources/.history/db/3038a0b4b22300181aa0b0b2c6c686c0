@@ -1,0 +1,133 @@
+import java.util.ArrayList;
+
+public class Database {
+	
+	private ArrayList<Table> tablearray;
+	
+	Database(){
+		
+	}
+	
+	Database(Table table){
+		
+		tablearray.add(table);
+	}
+	
+	
+	
+	
+	
+	void printDatabase(Database database){
+		
+		for (int i = 0; i < database.tablearray.size(); i++) {
+			Table value = database.tablearray.get(i);
+			value.printTable(value);
+	        System.out.println();
+		}
+		  System.out.println();
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+void testCreateDatabase(){
+test_Database_1();
+test_Database_2();
+test_Database_3();
+}
+	
+
+void test_Database_1(){
+	
+	String[] testString1 = { "FIRST", "SECOND", "THIRD", "FOURTH" };
+	String[] testString2 = { "Hello", "Two", "Thirty", "Panther" };
+	String[] testString3 = { "Darkness", "SECOND", "THIRD", "FOURTH" };
+	String[] testString4 = { "My", "SECOND", "THIRD", "FOURTH" };
+	String[] testString5 = { "Old", "SECOND", "THIRD", "FOURTH" };
+	String[] testString6 = { "Friend", "SECOND", "THIRD", "FOURTH" };
+	String[] testString7 = { "...", "SECOND", "THIRD", "FOURTH" };
+	
+	Row newrow1 = new Row(testString1);
+	Table newtable = new Table(newrow1, true, newrow1.key());
+	
+	newtable.addRow(testString2);
+	newtable.addRow(testString3);
+	newtable.addRow(testString4);
+	newtable.addRow(testString5);
+	newtable.addRow(testString6);
+	newtable.addRow(testString7);
+
+}
+
+void test_Database_2(){
+	
+	String[] testString1 = { "FIRST", "SECOND", "THIRD", "FOURTH" };
+	String[] testString2 = { "I've", "SECOND", "THIRD", "FOURTH" };
+	String[] testString3 = { "Come", "SECOND", "THIRD", "FOURTH" };
+	String[] testString4 = { "To", "SECOND", "THIRD", "FOURTH" };
+	String[] testString5 = { "Talk", "SECOND", "THIRD", "FOURTH" };
+	String[] testString6 = { "With", "SECOND", "THIRD", "FOURTH" };
+	String[] testString7 = { "You", "SECOND", "THIRD", "FOURTH" };
+	String[] testString8 = { "Again", "Eh?", "THIRD", "FOURTH" };
+	
+	Row newrow1 = new Row(testString1);
+	Table newtable = new Table(newrow1, true, newrow1.key());
+	
+	newtable.addRow(testString2);
+	newtable.addRow(testString3);
+	newtable.addRow(testString4);
+	newtable.addRow(testString5);
+	newtable.addRow(testString6);
+	newtable.addRow(testString7);
+	newtable.addRow(testString8);
+
+}
+
+void test_Database_3(){
+	
+	String[] testString1 = { "FIRST", "SECOND", "THIRD", "FOURTH" };
+	String[] testString2 = { "Because", "SECOND", "THIRD", "FOURTH" };
+	String[] testString3 = { "A", "SECOND", "THIRD", "FOURTH" };
+	String[] testString4 = { "Visions", "SECOND", "THIRD", "FOURTH" };
+	String[] testString5 = { "Softly", "SECOND", "THIRD", "FOURTH" };
+	String[] testString6 = { "Sleeping", "SECOND", "THIRD", "FOURTH" };
+
+	
+	Row newrow1 = new Row(testString1);
+	Table newtable = new Table(newrow1, true, newrow1.key());
+	
+	newtable.addRow(testString2);
+	newtable.addRow(testString3);
+	newtable.addRow(testString4);
+	newtable.addRow(testString5);
+	newtable.addRow(testString6);
+
+}
+
+
+	
+public static void main(String[] args) {
+	Database database = new Database();
+	database.run(args);
+
+}
+
+private void run(String[] args) {
+	if (args.length == 0) test();
+	else if (args.length >= 1) {
+		System.out.println("creating database");
+	}
+}
+
+void test(){
+
+testCreateDatabase();
+printDatabase(this);
+}
+
+}

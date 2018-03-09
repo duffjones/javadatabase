@@ -1,56 +1,61 @@
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
+import java.io.Serializable;
 
-class Row {
+class Row implements Serializable {
 
 	private String[] field;
-	private int key; 
-	//private String[] header;
-	//private int headersize; 
+	private String key; 
+	
 
-
-	String[] field() {
-		return field;
-	}
-
-	int key() {
-		return key;
-	}
+	String[] field() {return field;}
+	String key() {return key;}
 	
 	Row(String[] data) {
 		field = data;
 		key = genRandom();
-		System.out.println("Key:" + key);
 	}
-
+	
 	Row() {
-
 	}
 	
 	String getElement(int elementplace){
-	
 		return field[elementplace]; 
 	}
 
-	int genRandom(){
-		//key same number of digits. 
-		//check for same keys
-		  return new Random().nextInt(1000);// or may be cache random instance
+	//Generates a random int for our Key, and converts it to a string. 
+	String genRandom(){
+		int rando = new Random().nextInt(999999)+100000;
+		String randomstr = Integer.toString(rando);
+		  return randomstr;// or may be cache random instance
 		}
 	
+	//Prints a Row with spacing/formatting. 
+	void rowPrint() {
+		for (int i = 0; i < field.length; i++) {
+		System.out.printf(" %10s ", field[i]);
+		}
+		System.out.printf(" %10s ", key);
+
+	}
 	
+	//counts elements in a Row. 
 	int rowCount() {
 		int count = field.length;
 		return count;
 	}
 
+	//Replaces a single element in a row; 
 	void rowChange(int element, String string) {
 		field[element] = string;
 	}
 
+	
+	 //-----------------------------------------------------------//
+	//-------------------------TESTING---------------------------//
+   //-----------------------------------------------------------//
+	
 	void testPrint(String[] row) {
-
 		System.out.println("Test Print:" + Arrays.toString(row));
 	}
 

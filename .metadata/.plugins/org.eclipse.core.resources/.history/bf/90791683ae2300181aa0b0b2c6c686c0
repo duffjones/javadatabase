@@ -1,0 +1,199 @@
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.io.Serializable;
+
+public class Table implements Serializable {
+	private ArrayList<Row> tabledata;
+	private ArrayList<String> keydata;
+	private String selectedkey; 
+	private int headersize; 
+
+	
+	ArrayList<Row> getTable() {
+		return tabledata;
+	}
+	
+	ArrayList<String> getKey() {
+		return keydata;
+	}
+	
+	int getHeader() {
+		return headersize;
+	}
+
+
+	Table(Row columnTitles, boolean header, String key) {
+		tabledata = new ArrayList<Row>();
+		Collections.addAll(tabledata, columnTitles);
+		keydata = new ArrayList<String>();
+		Collections.addAll(keydata, key);
+		System.out.println("Headersize " + headersize);
+		headersize = columnTitles.field().length;
+	}
+
+	
+	void addRow(String[] rowdata) {
+		if(rowdata.length > headersize) {
+			//add error
+			System.out.println("Too many elements for header");
+			return;
+		}
+		Row newrow = new Row(rowdata);
+		Collections.addAll(tabledata, newrow);
+		Collections.addAll(keydata, newrow.key());
+	}
+	
+	
+	void deleteRowKey(ArrayList<Row> tabledata, String keyint, Table table, ArrayList<String> key) {
+		 int rownumber = 0; 
+			    for(int i=0; i < key.size(); i++) {
+			        String s = key.get(i);
+			        if (s == keyint)
+			         {
+			            rownumber = i;
+			        }
+			    }
+		for (int i = 0; i <= headersize; i++) {
+		tabledata.remove(rownumber);
+		}}
+	
+	
+	void deleteRow(int rownumber, Table table) {
+		table.tabledata.remove(rownumber);
+		}
+
+	
+	void selectRow(ArrayList<Row> tabledata, int rownumber, Table table) {
+		//add key selection, that stores key of most recently selected
+
+				System.out.print("Selected Row Contains: " );
+				Row value = table.tabledata.get(rownumber);
+				value.rowPrint();
+				System.out.println("... End Selection");
+				selectedkey = value.key(); 
+		    }
+	
+	void updateRow(int rownumber, Row row, Table table) {
+				table.tabledata.set(rownumber, row);
+			}
+
+	void printTable(Table source) {
+		for (int i = 0; i < source.tabledata.size(); i++) {
+			Row value = source.tabledata.get(i);
+			value.rowPrint();
+	        System.out.println();
+		}
+		  System.out.println();
+	}
+
+	Table createTableTest() {
+		String[] header = { "ID", "NAME", "KIND", "Owner" };
+		String[] rowone = { "1", "Fido", "dog", "ab123" };
+		String[] rowtwo = { "2", "Wanda", "fish", "ef789" };
+		String[] rowthree = { "3", "Garfield", "cat", "ab123" };
+		//String[] rowfour = { "3", "Garfield", "cat", "ab123", "test 5" };
+		Row newrow = new Row(header);
+		Table newtable = new Table(newrow, true, newrow.key());
+		newtable.addRow(rowone);
+		newtable.addRow(rowtwo);
+		newtable.addRow(rowthree);
+
+		return newtable;
+	}
+
+	Table createTableTestTwo() {
+		String[] header = { "USERNAME", "NAME"};
+		String[] rowone = { "ab123", "Jo"};
+		String[] rowtwo = { "cd456", "Sam"};
+		String[] rowthree = { "ef789", "Amy"};
+		String[] rowfour = { "gh012", "Pete"};
+		Row newrow = new Row(header);
+		Table newtable = new Table(newrow, true, newrow.key());
+		newtable.addRow(rowone);
+		newtable.addRow(rowtwo);
+		newtable.addRow(rowthree);
+		newtable.addRow(rowfour);
+		return newtable;
+	}
+
+	void test() {
+		Table testtable = createTableTest();
+		Table testtabletwo = createTableTestTwo();
+		saveTable(testtable);
+		printTable(testtabletwo);
+		printTable(testtable);
+		deserialize();
+		//deleteRowKey(testtable.tabledata, 0, testtable, testtable.keydata);
+		
+		String[] rowupdate = { "99", "Turdy", "gargoyle", "ab123" };
+		Row newrow = new Row(rowupdate);
+		
+		updateRow(2, newrow, testtable);
+		selectRow(testtable.tabledata, 2, testtable);
+		deleteRow(1, testtable);
+		printTable(testtable);
+	}
+
+	void saveTable(Table table) {
+		//should create a new file if one exists with name, or if file is empty. 
+		try {
+			FileOutputStream fileOut = new FileOutputStream(
+					"C:\\Users\\Trevor\\Desktop\\Java Database\\javadatabase\\Ian Database\\src\\Files\\testfiles.ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(table);
+			out.close();
+			fileOut.close();
+			System.out.println("Serialized data is saved in src\\Files");
+		} catch (IOException i) {
+			i.printStackTrace();
+		}
+	}
+
+	void deserialize() {
+		//currently just prints something, needs to return a table? tabledata?
+		Table e = null;
+		try {
+			FileInputStream fileIn = new FileInputStream(
+					"C:\\\\Users\\\\Trevor\\\\Desktop\\\\Java Database\\\\javadatabase\\\\Ian Database\\\\src\\\\Files\\\\testfiles.ser");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			e = (Table) in.readObject();
+			in.close();
+			fileIn.close();
+		} catch (IOException i) {
+			i.printStackTrace();
+			return;
+		} catch (ClassNotFoundException c) {
+			System.out.println("Table not found");
+			c.printStackTrace();
+			return;
+		}
+		System.out.println("LOADING FILE...");
+		printTable(e);
+	}
+
+	
+	void run(String[] args) {
+		if (args.length == 0)
+			test();
+		else if (args.length >= 1) {
+			System.out.println("creating table");
+		}
+	}
+
+	public static void main(String[] args) {
+		String[] myStringArray = { "a", "b", "c" };
+		Row newrow = new Row(myStringArray);
+		Table newtable = new Table(newrow, false, newrow.key());
+		newtable.run(args);
+	}
+
+}

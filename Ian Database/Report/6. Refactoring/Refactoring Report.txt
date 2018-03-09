@@ -1,0 +1,6 @@
+Due to my initial designs, a serious ammount of refactoring was needed. The biggest problems were: 
+
+-My Row class was not being accessed by my Record ArrayList<String>. Instead I was reading the String[] contents of a Row object, and saving that to Table. What I wanted instead was an ArrayList of Objects. I changed this by replacing ArrayList <String> with ArrayList<Row>. This allowed me to remove a method that was searching Row for a string[], and it also allowed me to remove a large number of arguments in my other methods, since everything can be referenced from inside my Table object. 
+
+-Second big bit of refactoring involved moving methods out of Table.class and into separate class files. File handling was the biggest bit to move, and by removing it I cleaned up the legibility of Table.class, while being able to more ruggedly test my file reading/writing.
+
