@@ -1,6 +1,5 @@
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 //------------------TODO------------------//
@@ -37,44 +36,6 @@ public class Database implements Serializable{
 		  System.out.println();
 	}
 	
-	
-	
-	 //-----------------------------------------------------------//
-	//-------------------------Catalogue-------------------------//
-   //-----------------------------------------------------------//
-		
-	//prints all table headers stored in database. 
-	void getTableHeaders() {
-		for (int i = 0; i < tablearray.size(); i++) {
-			Table value = tablearray.get(i);
-			Row valuerow = value.getTable().get(0);
-			System.out.println("Table " + (i+1) + ":");
-			valuerow.rowPrint();
-			System.out.println();
-		}
-	}
-	
-	//prints all table titles
-	void getTableTitles() {
-		for (int i = 0; i < tablearray.size(); i++) {
-			Table value = tablearray.get(i);
-			String title = value.tabletitle(); 
-			System.out.println("Table " + (i+1) + " Title:   " + title);
-		}
-	}
-	
-	//select a table in database by title, return it; 
-	Table selectTableByTitle(String title) {
-		for (int i = 0; i < tablearray.size(); i++) {
-			Table value = tablearray.get(i);
-			if(value.tabletitle().contains(title)) {
-				System.out.println("Table with Title:   <<" + title + ">>   found.");
-				return value; 	
-			}}
-		System.out.println("No Table with that Title found");
-		return null; 
-	}
-	
 	 //-----------------------------------------------------------//
 	//-------------------------TESTING---------------------------//
    //-----------------------------------------------------------//
@@ -100,7 +61,7 @@ printDatabase(loaddatabase);
 
 Table test_Database_1(){
 	
-	String[] testString1 = { "HEADER", "SECOND", "THIRD", "FOURTH" };
+	String[] testString1 = { "FIRST", "SECOND", "THIRD", "FOURTH" };
 	String[] testString2 = { "Hello", "Two", "Thirty", "Panther" };
 	String[] testString3 = { "Darkness", "SECOND", "THIRD", "FOURTH" };
 	String[] testString4 = { "My", "SECOND", "THIRD", "FOURTH" };
@@ -109,7 +70,7 @@ Table test_Database_1(){
 	String[] testString7 = { "...", "SECOND", "THIRD", "FOURTH" };
 	
 	Row newrow1 = new Row(testString1);
-	Table newtable = new Table(newrow1, "Test Table One");
+	Table newtable = new Table(newrow1);
 	
 	newtable.addRow(testString2);
 	newtable.addRow(testString3);
@@ -123,7 +84,7 @@ Table test_Database_1(){
 
 Table test_Database_2(){
 	
-	String[] testString1 = { "HEADER", "TABLE", "TWO", "FOURTH" };
+	String[] testString1 = { "FIRST", "SECOND", "THIRD", "FOURTH" };
 	String[] testString2 = { "I've", "SECOND", "THIRD", "FOURTH" };
 	String[] testString3 = { "Come", "SECOND", "THIRD", "FOURTH" };
 	String[] testString4 = { "To", "SECOND", "THIRD", "FOURTH" };
@@ -133,7 +94,7 @@ Table test_Database_2(){
 	String[] testString8 = { "Again", "Eh?", "THIRD", "FOURTH" };
 	
 	Row newrow1 = new Row(testString1);
-	Table newtable = new Table(newrow1, "Test Table Two");
+	Table newtable = new Table(newrow1);
 	
 	newtable.addRow(testString2);
 	newtable.addRow(testString3);
@@ -149,7 +110,7 @@ Table test_Database_2(){
 
 Table test_Database_3(){
 	
-	String[] testString1 = { "HEADER", "TABLE", "THREE", "FOURTH" };
+	String[] testString1 = { "FIRST", "SECOND", "THIRD", "FOURTH" };
 	String[] testString2 = { "Because", "SECOND", "THIRD", "FOURTH" };
 	String[] testString3 = { "A", "SECOND", "THIRD", "FOURTH" };
 	String[] testString4 = { "Visions", "SECOND", "THIRD", "FOURTH" };
@@ -158,7 +119,7 @@ Table test_Database_3(){
 
 	
 	Row newrow1 = new Row(testString1);
-	Table newtable = new Table(newrow1, "Test Table Three");
+	Table newtable = new Table(newrow1);
 	
 	newtable.addRow(testString2);
 	newtable.addRow(testString3);
@@ -185,10 +146,6 @@ private void run(String[] args) {
 void test(){
 
 testCreateDatabase();
-getTableHeaders();
-getTableTitles();
-Table findtitle = selectTableByTitle("Test Table Three");
-findtitle.printTable(findtitle);
 
 }
 

@@ -7,36 +7,29 @@ public class Table implements Serializable {
 	private ArrayList<Row> tabledata;
 	private ArrayList<String> keydata;
 	private String selectedkey; 
-	private String tabletitle; 
 	private int headersize; 
 
 	ArrayList<Row> getTable() { return tabledata;}
 	ArrayList<String> getKey() {return keydata;	}
-	String tabletitle() {return tabletitle;}; 
 	int getHeader() {return headersize;	}
 	Table(){}
 
 	//Table Constructor that creates a new Table from any Row
-	Table(Row firstrow, String title) {
-		
+	Table(Row firstrow) {
 		keydata = new ArrayList<String>();
-		Collections.addAll(keydata, firstrow.key());
-		
 			//checks that there are no duplicate keys. Recreates Row if there is. 
 			if(keydata.contains(firstrow.key())) {
 				Row newrowkey = new Row(firstrow.field());
 				firstrow = newrowkey; 
 			}
-			
 		tabledata = new ArrayList<Row>();
 		Collections.addAll(tabledata, firstrow);
-		
+		Collections.addAll(keydata, firstrow.key());
 		headersize = firstrow.field().size();
-		tabletitle = title; 
 	}
 	
 	//Table Constructor that allows for user to define custom Header Fields
-	Table(String[] headerfields, String title) {
+	Table(String[] headerfields) {
 		keydata = new ArrayList<String>();
 		tabledata = new ArrayList<Row>();
 		Row headers = new Row(headerfields);
@@ -48,7 +41,6 @@ public class Table implements Serializable {
 		Collections.addAll(tabledata, headers);
 		Collections.addAll(keydata, headers.key());
 		headersize = headerfields.length; 
-		tabletitle = title; 
 	}
 		
 
@@ -124,7 +116,7 @@ public class Table implements Serializable {
 		//following line should be ignored for exceeding field limit
 		String[] rowfour = { "3", "Garfield", "cat", "ab123", "test 5" };
 		Row newrow = new Row(header);
-		Table newtable = new Table(newrow, "Test Table One");
+		Table newtable = new Table(newrow);
 		newtable.addRow(rowone);
 		newtable.addRow(rowtwo);
 		newtable.addRow(rowthree);
@@ -139,7 +131,7 @@ public class Table implements Serializable {
 		String[] rowthree = { "ef789", "Amy"};
 		String[] rowfour = { "gh012", "Pete"};
 		Row newrow = new Row(header);
-		Table newtable = new Table(newrow, "Test Table One");
+		Table newtable = new Table(newrow);
 		newtable.addRow(rowone);
 		newtable.addRow(rowtwo);
 		newtable.addRow(rowthree);
@@ -208,7 +200,7 @@ public class Table implements Serializable {
 	public static void main(String[] args) {
 		String[] myStringArray = { "a", "b", "c" };
 		Row newrow = new Row(myStringArray);
-		Table newtable = new Table(newrow, "Test Table One");
+		Table newtable = new Table(newrow);
 		newtable.run(args);
 	}
 

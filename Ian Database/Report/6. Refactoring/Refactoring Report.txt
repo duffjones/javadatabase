@@ -4,3 +4,4 @@ Due to my initial designs, a serious ammount of refactoring was needed. The bigg
 
 -Second big bit of refactoring involved moving methods out of Table.class and into separate class files. File handling was the biggest bit to move, and by removing it I cleaned up the legibility of Table.class, while being able to more ruggedly test my file reading/writing.
 
+-Eventually I realized that if I wanted to resize the number of columns, my Record class couldn't save its data in a String[], since that type is not dynamic. To solve this I went back and changed the field data to ArrayType<String>. I considered using another custom object instead, since its later a goal to store objects of different types -- but I think it will be easier to convert other types to strings and store that, for now. 

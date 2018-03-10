@@ -1,0 +1,8 @@
+My first idea for experimenting with catalogues was to print the headers for each table stored in a database. This was pretty easy, as I just had to iterate through my ArrayList<Database> for Database.size times -- then print the first row stored in each of those tables. 
+
+Moving forward, I wanted to be able to print out a list of tables, which would mean adding a "Table Name" value to my Table Object. This could then be printed in Database, similar to above. 
+
+Since not every table has/needs a title I added a third constructor that takes a string argument for table title. If a user enters a name, it will be populated, otherwise the value will remain null...After implementing this, it seems easier to always have a title, so the user is now required to enter one when constructing a table. 
+
+Once tables all had titles, I decided to implement a database feature to search and return a table based on its title. Doing this was pretty simple, involved iterating through each database ArrayList<Table> element, and checking if its title matched a string argument. If it did, it returns the table with the title. Otherwise it returns NULL. 
+

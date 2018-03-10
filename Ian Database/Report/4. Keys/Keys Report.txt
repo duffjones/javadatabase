@@ -1,0 +1,15 @@
+I considered several options for implementing keys: 
+
+-Storing a key in the Record/Row object, and accessing it from Tables. 
+-Refactoring to a Hashmap and using the keys for that. 
+-Storing key in an ArrayList<Integer> in tables. 
+
+Honestly, I just went with what was simplest to implement which is the third option. 
+
+Whenever I add a row to a table, I save its fielddata to an ArrayList<String>. I just added a function to randomly generate a key, stored in Row.Class, whenever a Row is created. Then, I created a second ArrayList<Integer> in table, that stores the value from Row.Key() each time a new row is stored in the table. 
+
+element[i] in ArrayList<String>, which correspongs with a row/record can be paired with its key element[i] in ArrayList<Integer>. 
+
+If I search ArrayList<Integer> for a key, I can return its element number, and simply search for that corresponding element in my array of Rows. 
+
+Current issue with that is that the key is not saved to a file when I serialize. I will need to refactor my print function to save keys. This also makes me realize that I might create a second way to store files with my print function that will make them readable in English. 
