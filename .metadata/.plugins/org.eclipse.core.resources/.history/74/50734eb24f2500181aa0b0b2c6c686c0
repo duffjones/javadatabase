@@ -1,0 +1,124 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+public class Interface {
+
+	public Database interfacedb;
+
+	void mainMenu() {
+	
+		System.out.println("DATABASE COMMANDS: ");
+	    System.out.println("1. Create Table");
+	    System.out.println("2. Create Row");
+	    System.out.println("3. Create DataBase");
+	
+	    System.out.println("Enter choice:");
+		Scanner scanner = new Scanner(System.in);
+	    int choice = scanner.nextInt();
+
+
+	    switch (choice) {
+	        case 1:
+	        	System.out.println("Creating Table. Enter Title:");
+	        	String title = getInput();
+	        	
+	        	System.out.println("Enter Number of Columns");
+	        	int rownumber = getInputInt();
+	        	
+	        	 ArrayList<String> rows = new ArrayList<String>();
+	        	
+	        		for(int i = 0; i < rownumber; i++) {
+	        			System.out.println("Enter Row Field:");
+	        			rows.add(getInput());
+	        		}
+	        		
+	        	Row newrow = new Row(rows);
+	        	Table newtable = new Table(newrow, title);
+	        	System.out.println("Printing your table:");
+	        	newtable.printTable(newtable);
+	        	Database newdb = interfacedb; 
+	        	newdb.addTable(newtable, newdb);
+	            break;
+	            
+	        case 2:
+	        	System.out.println("Creating Row...");
+	        	
+	        	System.out.println("Enter Number of Columns");
+	        	int rownumber2 = getInputInt();
+	        	
+	        	 ArrayList<String> rows2 = new ArrayList<String>();
+	        	
+	        		for(int i = 0; i < rownumber2; i++) {
+	        			System.out.println("Enter Row Field:");
+	        			rows2.add(getInput());
+	        		}
+	        		
+	        	Row newrow2 = new Row(rows2);
+	        	System.out.println("Printing your row:");
+	        	newrow2.rowPrint();
+	        	System.out.println("Add to table? Enter table name:");
+	        	Table addtable = getTitle(interfacedb);
+	        	addtable.addRow(newrow2);
+	            break;
+	            
+	        case 3:
+	        	System.out.println("Selecting Table by Title...");
+	        	getTitle(interfacedb);
+	            break;
+	            
+	        
+	            
+	        default:
+	        	System.out.println("Invalid Choice...");
+	        	
+	}
+	}
+	
+	Table getTitle(Database database) {
+		String title = getInput(); 
+		
+		Table thistable = database.selectTableByTitle(title);
+		return thistable; 
+	}
+	
+	String getInput() {
+	        Scanner console = new Scanner(System.in);
+	        String command = console.next();
+	        return command;
+	}
+	
+	int getInputInt() {
+        Scanner console = new Scanner(System.in);
+        int command = console.nextInt();
+        return command;
+}
+	
+
+	void test() {
+		mainMenu();
+	}
+	
+	void run(String[] args) {
+		if (args.length == 0)
+			test();
+		else if (args.length >= 1) {
+			System.out.println("creating table");
+		}
+	}
+
+	public static void main(String[] args) {
+		Interface newinterface = new Interface();
+
+		newinterface.run(args);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

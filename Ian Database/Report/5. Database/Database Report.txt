@@ -1,0 +1,32 @@
+Implementing Database.class was easy as I could use the same structure of ArrayList<Object> to store my Table objects, as I did in Table.class with my Row objects. Saving/serializing and deserializing has the same code as Tables, aswell. It stores a copy of the Database ArrayList object as binary in a .ser file.  Printing a database was just a matter of calling the printTable() function in a loop. Further features will be added later when I move onto the Catalogue extension. 
+
+
+class Database implements Serializable{
+	
+	private ArrayList<Table> tablearray;
+	
+	Database(){
+		tablearray = new ArrayList<Table>();
+	}
+
+	//Database constructor that populates Datebase with Table. 
+	Database(Table table){
+		tablearray = new ArrayList<Table>();
+		tablearray.add(table);
+	}
+	
+	//Adds a Table to the chosen database. 
+	void addTable(Table table, Database database){
+		tablearray.add(table);
+	}
+	
+	//Prints all the Tables in a database
+	void printDatabase(Database database){
+		for (int i = 0; i < tablearray.size(); i++) {
+			Table value = tablearray.get(i);
+			value.printTable(value);
+		}
+		  System.out.println();
+	}
+	
+

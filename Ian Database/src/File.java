@@ -5,11 +5,10 @@ public class File  {
 
 
 	void saveTable(Table table) {
+		
 		//should create a new file if one exists with name, or if file is empty. 
 		try {
-			FileOutputStream fileOut = new FileOutputStream(
-					"C:\\Users\\Trevor\\Desktop\\Java Database\\javadatabase\\Ian Database\\src\\Files\\testtable.ser");
-
+			FileOutputStream fileOut = new FileOutputStream("src\\Files\\testtable.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(table);
 			out.close();
@@ -23,9 +22,7 @@ public class File  {
 	void saveDB(Database database) {
 		//should create a new file if one exists with name, or if file is empty. 
 		try {
-			FileOutputStream fileOut = new FileOutputStream(
-					"C:\\Users\\Trevor\\Desktop\\Java Database\\javadatabase\\Ian Database\\src\\Files\\testdatabase.ser");
-
+			FileOutputStream fileOut = new FileOutputStream("src\\Files\\testdatabase.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(database);
 			out.close();
@@ -36,15 +33,14 @@ public class File  {
 		}
 	}
 
-
+	//opens binary file created by save, reads it in, and returns the saved object
 	Table deserialize() {
-		Table e = null;
+		Table tableser = null;
 		System.out.println("ATTEMPTING TO LOAD TABLE...");
 		try {
-			FileInputStream fileIn = new FileInputStream(
-					"C:\\Users\\Trevor\\Desktop\\Java Database\\javadatabase\\Ian Database\\src\\Files\\testtable.ser");
+			FileInputStream fileIn = new FileInputStream("src\\Files\\testtable.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
-			e = (Table) in.readObject();
+			tableser = (Table) in.readObject();
 			in.close();
 			fileIn.close();
 		} catch (IOException i) {
@@ -56,19 +52,18 @@ public class File  {
 			return null;
 		}
 		System.out.println("PRINTING FILE...");
-		e.printTable(e);
+		tableser.printTable(tableser);
 		System.out.println("LOADING FILE COMPLETE...");
-		return e; 
+		return tableser; 
 	}
 	
 	Database deserializeDB() {
-		Database e = null;
+		Database dbser = null;
 		System.out.println("ATTEMPTING TO LOAD DATABASE...");
 		try {
-			FileInputStream fileIn = new FileInputStream(
-					"C:\\Users\\Trevor\\Desktop\\Java Database\\javadatabase\\Ian Database\\src\\Files\\testdatabase.ser");
+			FileInputStream fileIn = new FileInputStream("src\\Files\\testdatabase.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
-			e = (Database) in.readObject();
+			dbser = (Database) in.readObject();
 			in.close();
 			fileIn.close();
 		} catch (IOException i) {
@@ -79,10 +74,8 @@ public class File  {
 			c.printStackTrace();
 			return null;
 		}
-		return e; 
+		return dbser; 
 	}
-	
-	
 	
 }
 

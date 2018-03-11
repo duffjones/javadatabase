@@ -1,0 +1,70 @@
+import java.util.Scanner;
+public class Interface {
+
+	
+	
+	
+	
+	void getInput() {
+		System.out.println("DATABASE COMMANDS: ");
+	    System.out.println("1. Create Table");
+	    System.out.println("2. Create Row");
+	    System.out.println("3. Create DataBase");
+	
+		Scanner scanner = new Scanner(System.in);
+	    int choice = scanner.nextInt();
+
+
+	    
+	    
+	    
+	    switch (choice) {
+	        case 1:
+	        	System.out.println("Creating Table...");
+	            
+	            break;
+	        case 2:
+	        	System.out.println("Creating Row...");
+	            break;
+	        case 3:
+	        	System.out.println("Creating Database...");
+	            break;
+
+	        default:
+	            // The user input an unexpected choice.
+
+	}
+	    
+	}
+	
+	
+	void test() {
+		getInput();
+	}
+	
+	
+	void run(String[] args) {
+		if (args.length == 0)
+			test();
+		else if (args.length >= 1) {
+			System.out.println("creating table");
+		}
+	}
+
+	public static void main(String[] args) {
+		Interface newinterface = new Interface();
+//		String[] myStringArray = { "a", "b", "c" };
+//		Row newrow = new Row(myStringArray);
+//		Table newtable = new Table(newrow, "Test Table One");
+		newinterface.run(args);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

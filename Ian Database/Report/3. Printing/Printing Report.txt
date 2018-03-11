@@ -10,8 +10,41 @@ Serialized data is saved in src\FilesTabledata: [ID, NAME, KIND, Owner, 1, Fido,
           2      Wanda       fish      ef789
           3   Garfield        cat      ab123
 
-
-
-
 This could be made dynamic by checking the length of all elements in the table, and making the padding equal to the length of the longest word. However, 10 spaces is working well for me now. I may return and add that feature. 
 
+Eventually, I had to restructure the way I store data, and inherantly printing changed at well. Eventually, my print functions became loops that would call lower-level printing functions. Ie: Database print calls Table print in a loop, Table print calls Row Print in a loop. 
+
+
+VARIOUS PRINT FUNCTIONS: 
+
+ROW:
+
+	void rowPrint() {
+
+		for (int i = 0; i < field.size(); i++) {
+			System.out.printf(" %10s ", field.get(i));
+		}
+		System.out.printf(" %10s ", key);
+	}
+
+TABLE:
+
+	void printTable(Table source) {
+		System.out.println("TITLE:" + source.tabletitle);
+		for (int i = 0; i < source.tabledata.size(); i++) {
+			Row value = source.tabledata.get(i);
+			value.rowPrint();
+	        System.out.println();
+		}
+		  System.out.println();
+	}
+
+DATABASE:
+
+	void printDatabase(Database database){
+		for (int i = 0; i < tablearray.size(); i++) {
+			Table value = tablearray.get(i);
+			value.printTable(value);
+		}
+		  System.out.println();
+	}

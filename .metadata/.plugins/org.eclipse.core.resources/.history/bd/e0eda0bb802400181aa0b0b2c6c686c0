@@ -1,0 +1,53 @@
+import java.util.Scanner;
+public class Interface {
+
+	
+	
+	
+	
+	void getInput() {
+		Scanner movein = new Scanner(System.in);
+
+		System.out.print("Scanning");
+
+		String command = movein.next();
+		if(command == "hello") {
+			
+			System.out.print("SOLID INPUT");
+		}
+		getInput();
+
+	}
+
+	
+	
+	void test() {
+		getInput();
+	}
+	
+	
+	void run(String[] args) {
+		if (args.length == 0)
+			test();
+		else if (args.length >= 1) {
+			System.out.println("creating table");
+		}
+	}
+
+	public static void main(String[] args) {
+		Interface newinterface = new Interface();
+//		String[] myStringArray = { "a", "b", "c" };
+//		Row newrow = new Row(myStringArray);
+//		Table newtable = new Table(newrow, "Test Table One");
+		newinterface.run(args);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

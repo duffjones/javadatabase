@@ -1,0 +1,36 @@
+Database Assignment
+-------------------
+
+Program Overview:
+-----------------
+	The program contains 4 Java files: Row, Table, Database, and File. Each is run independantly for testing through its respective main() with no arguments. Row.java creates an ArrayList<String> for holding fields of data. Row contains methods for changing a row(adding, updating, etc) and printing a row. Table.java creates an ArrayList<Row>, a dynamic array of our Object type Row. Table also has complementary methods that manipulate a table: by adding a row, updating a row, removing a row, adding a column, etc. Database.class stores Tables in an ArrayList, and provides methods to print, search, add and remove tables. File.class handles serializing and deserializing both Tables and Databases to .ser files. 	
+	
+Planning:
+--------- 
+	Since a part of the assignment description called for us to avoid "reading about a stage until you have finished the previous ones", planning was done incrementally at the beginning of each stage. 
+	Row, without consideration for the future stages, was quite different in planning than its final implementation -- since I wasn't considering how its values could be accessed, or changed, especially when interacting with other classes. What was planned as a simple Array holding Strings, turned into String[], ArrayList<String>, with final considerations for a method of storage involving hashing. My original plan was simple, an array with a few methods to search it and change values. Eventually I would need keys, headers, get/return methods, etc... but I wouldn't find out about that until later. 
+	Learning from the mistakes of having to refactor Row.java for the addition of Table.java, I tried to look forward a bit moving forward from Tables. Eventually I planned to keep a similar structure of storing objects in ArrayList<Object> for every .java file.
+
+Reports:
+	Planning is discussed further in each stage of my "Report" files. There should be a corresponding .txt file with thoughts on development, summary of some problems I faced, descriptions of refactoring, and relevant code snippets. 
+
+Functions: 
+
+-Row
+-Table
+-File
+-Database
+-(planned) Interface
+
+Issues: 
+
+-Hash vs ArrayList
+-File Writing vs Serialization 
+
+Changes I would make:
+-Hash
+-Refactoring
+-Consolidation of arguments
+-Finish Interface
+
+

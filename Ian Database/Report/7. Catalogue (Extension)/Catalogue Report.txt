@@ -6,3 +6,39 @@ Since not every table has/needs a title I added a third constructor that takes a
 
 Once tables all had titles, I decided to implement a database feature to search and return a table based on its title. Doing this was pretty simple, involved iterating through each database ArrayList<Table> element, and checking if its title matched a string argument. If it did, it returns the table with the title. Otherwise it returns NULL. 
 
+Specific selection of rows, or fields can be done with methods in the respective classes. 
+
+Code: 
+
+	//prints all table headers stored in database. 
+	void getTableHeaders() {
+		for (int i = 0; i < tablearray.size(); i++) {
+			Table value = tablearray.get(i);
+			Row valuerow = value.getTable().get(0);
+			System.out.println("Table " + (i+1) + ":");
+			valuerow.rowPrint();
+			System.out.println();
+		}
+	}
+	
+	//prints all table titles
+	void getTableTitles() {
+		for (int i = 0; i < tablearray.size(); i++) {
+			Table value = tablearray.get(i);
+			String title = value.tabletitle(); 
+			System.out.println("Table " + (i+1) + " Title:   " + tle);
+		}
+	}
+	
+	//select a table in database by title, return it; 
+	Table selectTableByTitle(String title) {
+		for (int i = 0; i < tablearray.size(); i++) {
+			Table value = tablearray.get(i);
+			if(value.tabletitle().contains(title)) {
+				System.out.println("Table with Title:   <<" + title + ">>   found.");
+				return value; 	
+			}}
+		System.out.println("No Table with that Title found");
+		return null; 
+	}
+	

@@ -1,0 +1,63 @@
+import java.util.Scanner;
+public class Interface {
+
+	
+	
+	
+	
+	void getInput() {
+		
+	
+		Scanner scanner = new Scanner(System.in);
+	    int choice = scanner.nextInt();
+
+	    switch (choice) {
+	        case 1:
+	            // Perform "original number" case.
+	            break;
+	        case 2:
+	            // Perform "encrypt number" case.
+	            break;
+	        case 3:
+	            // Perform "decrypt number" case.
+	            break;
+	        case 4:
+	            // Perform "quit" case.
+	            break;
+	        default:
+	            // The user input an unexpected choice.
+
+	}
+	}
+	
+	
+	void test() {
+		getInput();
+	}
+	
+	
+	void run(String[] args) {
+		if (args.length == 0)
+			test();
+		else if (args.length >= 1) {
+			System.out.println("creating table");
+		}
+	}
+
+	public static void main(String[] args) {
+		Interface newinterface = new Interface();
+//		String[] myStringArray = { "a", "b", "c" };
+//		Row newrow = new Row(myStringArray);
+//		Table newtable = new Table(newrow, "Test Table One");
+		newinterface.run(args);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

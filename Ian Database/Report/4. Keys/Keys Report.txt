@@ -12,4 +12,24 @@ element[i] in ArrayList<String>, which correspongs with a row/record can be pair
 
 If I search ArrayList<Integer> for a key, I can return its element number, and simply search for that corresponding element in my array of Rows. 
 
-Current issue with that is that the key is not saved to a file when I serialize. I will need to refactor my print function to save keys. This also makes me realize that I might create a second way to store files with my print function that will make them readable in English. 
+-Current issue with that is that the key is not saved to a file when I serialize. I will need to refactor my print function to save keys. This also makes me realize that I might create a second way to store files with my print function that will make them readable in English. 
+
+
+
+KeyGen code: 
+
+	String genRandom() {
+		int rando = new Random().nextInt(1000000) + 999999;
+		String randomstr = "KEY-";
+		randomstr = randomstr + Integer.toString(rando);
+		return randomstr;
+	}
+
+Handling of duplicate keys is done in Table.class, when a new row is added, a table is checked for matching keys, and the Row is rebuilt if one exists: 
+
+			
+	if(keydata.contains(firstrow.key())) {
+		Row newrowkey = new Row(firstrow.field());
+		firstrow = newrowkey; 
+	}
+

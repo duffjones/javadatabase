@@ -18,7 +18,6 @@ public class Table implements Serializable {
 
 	//Table Constructor that creates a new Table from any Row
 	Table(Row firstrow, String title) {
-		
 		keydata = new ArrayList<String>();
 		Collections.addAll(keydata, firstrow.key());
 		
@@ -63,6 +62,11 @@ public class Table implements Serializable {
 		Collections.addAll(keydata, newrow.key());
 	}
 	
+	void addRow(Row row) {
+		Collections.addAll(tabledata, row);
+		Collections.addAll(keydata, row.key());
+	}
+	
 	void addColumn(String fieldname, Table table) {
 		table.tabledata.get(0).rowAddCol(fieldname);
 		table.headersize = table.headersize + 1; 
@@ -103,6 +107,7 @@ public class Table implements Serializable {
 
 	//Prints a table
 	void printTable(Table source) {
+		System.out.println("TITLE:" + source.tabletitle);
 		for (int i = 0; i < source.tabledata.size(); i++) {
 			Row value = source.tabledata.get(i);
 			value.rowPrint();
@@ -116,6 +121,8 @@ public class Table implements Serializable {
 	//-------------------------TESTING---------------------------//
    //-----------------------------------------------------------//
 	
+	//This is where the values for our first test table are defined. 
+	//String could easily come from user input
 	Table createTableTest() {
 		String[] header = { "ID", "NAME", "KIND", "Owner" };
 		String[] rowone = { "1", "Fido", "dog", "ab123" };
@@ -132,6 +139,7 @@ public class Table implements Serializable {
 		return newtable;
 	}
 
+	//Second test table
 	Table createTableTestTwo() {
 		String[] header = { "USERNAME", "NAME"};
 		String[] rowone = { "ab123", "Jo"};
@@ -148,44 +156,52 @@ public class Table implements Serializable {
 	}
 
 	void test() {
+		//Creates two test tables
 		File newfile = new File();
 		System.out.println("Creating Test Tables...");
 		Table testtable = createTableTest();
 		Table testtabletwo = createTableTestTwo();
+		//Saves a test table to a file
 		System.out.println("Testing Saving...");
 		newfile.saveTable(testtable);
 		
+		//Tests the table printing function
 		System.out.println("Testing Printing...");
 		System.out.println("Printing Table One...");
 		printTable(testtabletwo);
 		System.out.println("Printing Table Two...");
 		printTable(testtable);
 		
+		//Tests loading from earlier file, and prints result for comparison 
 		System.out.println("Testing Loading...");
 		Table loadtable = newfile.deserialize();
-		
 		System.out.println("Printing Loaded Save...");
 		printTable(loadtable);
 
+		//Test row update method that changes values of a row in a table. 
 		System.out.println("Testing Row Update...");
 		String[] rowupdate = { "99", "Turdy", "gargoyle", "ab123" };
 		Row newrow = new Row(rowupdate);
 		updateRow(2, newrow, testtable);
 		
+		//testing the ability to select a row, and store its key as the selectedkey
 		System.out.println("Testing Row Select...");
 		selectRow(2, testtable);
 		selectRow(2, testtabletwo);
 		
+		//Tests the delete row method and prints for comparison
 		System.out.println("Testing Delete Row...");
 		deleteRow(1, testtable);
 		printTable(testtable);
 		
+		//Test the addColumn method, which adds a column to a specified table; 
 		System.out.println("Testing Add Column...");
 		addColumn("test", testtable);
 		addColumn("testtwo", testtable);
 		addColumn("testthree", testtable);
 		printTable(testtable);
 		
+		//checks that a row of wrong dimensions cannot be added to a table
 		System.out.println("Testing Row Limits...");
 		//should fail 
 		String[] columntest = { "3", "Garfield", "cat", "ab123" };

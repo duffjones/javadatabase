@@ -1,21 +1,11 @@
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-
-
-//------------------TODO------------------//
-//create table with headers: 
-
-//EXTENSION: Journal, Catalogue, User Input
-
 
 public class Database implements Serializable{
 	
 	private ArrayList<Table> tablearray;
 	
-	Database(){
-		tablearray = new ArrayList<Table>();
-	}
+	Database(){	tablearray = new ArrayList<Table>();}
 	
 	//Database constructor that populates Datebase with Table. 
 	Database(Table table){
@@ -169,10 +159,17 @@ Table test_Database_3(){
 	return newtable;
 }
 	
+void test(){
+	testCreateDatabase();
+	getTableHeaders();
+	getTableTitles();
+	Table findtitle = selectTableByTitle("Test Table Three");
+	findtitle.printTable(findtitle);
+}
+
 public static void main(String[] args) {
 	Database database = new Database();
 	database.run(args);
-
 }
 
 private void run(String[] args) {
@@ -182,14 +179,5 @@ private void run(String[] args) {
 	}
 }
 
-void test(){
-
-testCreateDatabase();
-getTableHeaders();
-getTableTitles();
-Table findtitle = selectTableByTitle("Test Table Three");
-findtitle.printTable(findtitle);
-
-}
 
 }
