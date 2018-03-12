@@ -5,7 +5,7 @@ import java.util.Scanner;
 //---------------------------------------//
 
 //I started playing around with some ideas, 
-//but didn't hit our deadline before I could settle on a real structure. 
+//but hit our deadline before I could settle on a real structure. 
 //The code in these switch statements is meant to be refactored into specific methods. 
 //With time I would also use real commands instead of number selection... 
 //and make things loop more elegantly instead of my linear style of interaction. 
@@ -51,7 +51,6 @@ public class Interface {
 
 		case 2:
 			System.out.println("Creating Row...");
-
 			System.out.println("Enter Number of Columns");
 			int rownumber2 = getInputInt();
 
@@ -92,7 +91,7 @@ public class Interface {
 	}
 
 	void SecondMenu() {
-		System.out.println("SECOND MENU:");
+		System.out.println("COMMANDS:");
 		System.out.println("1. CREATE A TABLE");
 		System.out.println("2. CREATE A ROW");
 		System.out.println("3. SELECT A TABLE");
@@ -153,12 +152,12 @@ public class Interface {
 			currenttable = getTitle(interfacedb);
 			currenttable.printTable(currenttable);
 			break;
-			
+
 		case 5:
 			System.out.println("Printing Table Titles...");
 			interfacedb.getTableTitles();
 			break;
-			
+
 		default:
 			System.out.println("Invalid Choice...");
 		}

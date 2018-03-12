@@ -1,5 +1,23 @@
-Time is short, so I am going to attempt a very simple form of journaling. In a loop I can check if any changes have been made to a database, every 30 seconds or so. If changes have been made, the database will be saved/serialized to a journal file under a unique name that includes the timestamp of when the database was saved. 
-
-At the very least this will allow a user to go back and find older versions of their database, in case of a crash or other problems. 
+Time is short, so I am going to attempt a very simple form of journaling. In a loop I can check if any changes have been made to a database, every 30 seconds or so. If changes have been made, the database will be saved/serialized to a journal file under a unique name that includes the timestamp of when the database was saved. At the very least this will allow a user to go back and find older versions of their database, in case of a crash or other problems. 
 
 After that, I would possibly like to implement a feature that deletes very old records, so the file doesn't become too large. 
+
+....Running out of time I ended up implementing a very simple method that simply saves a targetted database every minute, for up to an hour, and then overwrites the oldest saved copy. Eventually, I would want a comparison to only run this method when the database has been changed. Some refactoring of this method into File.class would also be wise. 
+
+CODE:
+-----
+
+void journalRun(Database journaldb) {
+	File journalsave = new File();
+	Runnable runnable = new Runnable() {
+		int i; 
+		public void run() {
+		   journalsave.saveDB(journaldb, ".\testjournal" + i +".ser");
+		      System.out.println("Saving to Journal!!");
+		      i++;
+		      if (i >= 60) { i = 0;}
+		  }};
+	ScheduledExecutorService service = 	Executors.newSingleThreadScheduledExecutor();
+	    service.scheduleAtFixedRate(runnable, 1, 60, TimeUnit.SECONDS);
+}
+	

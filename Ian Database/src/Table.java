@@ -4,9 +4,9 @@ import java.util.Collections;
 import java.io.Serializable;
 
 public class Table implements Serializable {
-	private ArrayList<Row> tabledata;
-	private ArrayList<String> keydata;
-	private String selectedkey; 
+	private ArrayList<Row> tabledata = new ArrayList<Row>();
+	private ArrayList<String> keydata = new ArrayList<String>();
+	private String selectedkey; //unused - stores key of selected row. 
 	private String tabletitle; 
 	private int headersize; 
 
@@ -14,32 +14,25 @@ public class Table implements Serializable {
 	ArrayList<String> getKey() {return keydata;	}
 	String tabletitle() {return tabletitle;}; 
 	int getHeader() {return headersize;	}
+	
 	Table(){}
 
 	//Table Constructor that creates a new Table from any Row
 	Table(Row firstrow, String title) {
-		keydata = new ArrayList<String>();
 		Collections.addAll(keydata, firstrow.key());
-		
 			//checks that there are no duplicate keys. Recreates Row if there is. 
 			if(keydata.contains(firstrow.key())) {
 				Row newrowkey = new Row(firstrow.field());
 				firstrow = newrowkey; 
 			}
-			
-		tabledata = new ArrayList<Row>();
 		Collections.addAll(tabledata, firstrow);
-		
 		headersize = firstrow.field().size();
 		tabletitle = title; 
 	}
-	
+
 	//Table Constructor that allows for user to define custom Header Fields
 	Table(String[] headerfields, String title) {
-		keydata = new ArrayList<String>();
-		tabledata = new ArrayList<Row>();
 		Row headers = new Row(headerfields);
-		
 		if(keydata.contains(headers.key())) {
 			Row newrowkey = new Row(headers.field());
 			headers = newrowkey; 
@@ -63,26 +56,30 @@ public class Table implements Serializable {
 	}
 	
 	void addRow(Row row) {
+		if(row.field().size() != headersize) {
+			System.out.println("Wrong number for elements for Row");
+			return;
+		}
 		Collections.addAll(tabledata, row);
 		Collections.addAll(keydata, row.key());
 	}
 	
-	void addColumn(String fieldname, Table table) {
-		table.tabledata.get(0).rowAddCol(fieldname);
-		table.headersize = table.headersize + 1; 
-		for (int i = 1; i < table.tabledata.size(); i++) {
-			table.tabledata.get(i).rowAddCol("empty");
+	//adds a column with a field/header name and empty fields. 
+	void addColumn(String fieldname) {
+		tabledata.get(0).rowAddCol(fieldname);
+		headersize = headersize + 1; 
+		for (int i = 1; i < tabledata.size(); i++) {
+			tabledata.get(i).rowAddCol("empty");
 			}
 	}
 	
-	
 	//Deletes a row object at the specific element "rownumber" in Table. 
-	void deleteRow(int rownumber, Table table) {
-		table.tabledata.remove(rownumber);
+	void deleteRow(int rownumber) {
+		tabledata.remove(rownumber);
 	}
 	
 	//Deletes a row based on it's key. A key can be saved with the selectRow method. 
-	void deleteRowKey(ArrayList<Row> tabledata, String keyint, Table table, ArrayList<String> key) {
+	void deleteRowKey( String keyint, ArrayList<String> key) {
 		 int rownumber = 0; 
 			    for(int i=0; i < key.size(); i++) {
 			        String s = key.get(i);
@@ -92,19 +89,29 @@ public class Table implements Serializable {
 		}}
 	
 	//Prints the content of a specific row, and saves that rows key in Table to be used later for targetting. 
-	void selectRow(int rownumber, Table table) {
+	void selectRow(int rownumber) {
 				System.out.print("Selected Row Contains: " );
-				Row value = table.tabledata.get(rownumber);
+				Row value = tabledata.get(rownumber);
 				value.rowPrint();
 				System.out.println("... End Selection");
 				selectedkey = value.key(); 
 		    }
 	
 	//replaces a Row with another Row. 
-	void updateRow(int rownumber, Row row, Table table) {
-				table.tabledata.set(rownumber, row);
+	void updateRow(int rownumber, Row row) {
+				tabledata.set(rownumber, row);
 			}
 
+	//searches table for a string, and returns row it is contained in. 
+	Row searchRows(String string) {
+		Row newrow = new Row();
+		for (int i = 0; i < tabledata.size(); i++) {
+			if(tabledata.get(i).rowContains(string) == true) {
+			newrow = tabledata.get(i);
+		}}
+		return newrow; 
+	}
+	
 	//Prints a table
 	void printTable(Table source) {
 		System.out.println("TITLE:" + source.tabletitle);
@@ -147,7 +154,7 @@ public class Table implements Serializable {
 		String[] rowthree = { "ef789", "Amy"};
 		String[] rowfour = { "gh012", "Pete"};
 		Row newrow = new Row(header);
-		Table newtable = new Table(newrow, "Test Table One");
+		Table newtable = new Table(newrow, "Test Table Two");
 		newtable.addRow(rowone);
 		newtable.addRow(rowtwo);
 		newtable.addRow(rowthree);
@@ -163,7 +170,7 @@ public class Table implements Serializable {
 		Table testtabletwo = createTableTestTwo();
 		//Saves a test table to a file
 		System.out.println("Testing Saving...");
-		newfile.saveTable(testtable);
+		newfile.saveTable(testtable, "src\\Files\\testtable.ser");
 		
 		//Tests the table printing function
 		System.out.println("Testing Printing...");
@@ -174,7 +181,7 @@ public class Table implements Serializable {
 		
 		//Tests loading from earlier file, and prints result for comparison 
 		System.out.println("Testing Loading...");
-		Table loadtable = newfile.deserialize();
+		Table loadtable = newfile.deserialize("src\\Files\\testtable.ser");
 		System.out.println("Printing Loaded Save...");
 		printTable(loadtable);
 
@@ -182,23 +189,24 @@ public class Table implements Serializable {
 		System.out.println("Testing Row Update...");
 		String[] rowupdate = { "99", "Turdy", "gargoyle", "ab123" };
 		Row newrow = new Row(rowupdate);
-		updateRow(2, newrow, testtable);
+		testtable.updateRow(2, newrow);
+		printTable(testtable);
 		
 		//testing the ability to select a row, and store its key as the selectedkey
 		System.out.println("Testing Row Select...");
-		selectRow(2, testtable);
-		selectRow(2, testtabletwo);
+		testtable.selectRow(2);
+		testtabletwo.selectRow(2);
 		
 		//Tests the delete row method and prints for comparison
 		System.out.println("Testing Delete Row...");
-		deleteRow(1, testtable);
+		testtable.deleteRow(1);
 		printTable(testtable);
 		
 		//Test the addColumn method, which adds a column to a specified table; 
 		System.out.println("Testing Add Column...");
-		addColumn("test", testtable);
-		addColumn("testtwo", testtable);
-		addColumn("testthree", testtable);
+		testtable.addColumn("test");
+		testtable.addColumn("testtwo");
+		testtable.addColumn("testthree");
 		printTable(testtable);
 		
 		//checks that a row of wrong dimensions cannot be added to a table
@@ -211,13 +219,18 @@ public class Table implements Serializable {
 		String[] columntest2 = { "45", "Godzilla", "superlizard", "godz23", "newcomlumn", "test", "test"};
 		testtable.addRow(columntest2);
 		printTable(testtable);
+		
+		//searches for row containing string
+		System.out.println("Searching rows for:Godzilla...");
+		Row searchrow = testtable.searchRows("Godzilla");
+		searchrow.rowPrint();
 	}
-
+	
 	void run(String[] args) {
 		if (args.length == 0)
 			test();
 		else if (args.length >= 1) {
-			System.out.println("creating table");
+			System.out.println("This Class Takes No Arguments");
 		}
 	}
 

@@ -1,0 +1,226 @@
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Database implements Serializable{
+	
+	private ArrayList<Table> tablearray;
+	
+	Database(){	tablearray = new ArrayList<Table>();}
+	
+	//Database constructor that populates Datebase with Table. 
+	Database(Table table){
+		tablearray = new ArrayList<Table>();
+		tablearray.add(table);
+	}
+	
+	//Adds a Table to the chosen database. 
+	void addTable(Table table, Database database){
+		tablearray.add(table);
+	}
+
+	void removeTable(Table table, Database database){
+		tablearray.remove(table);
+	}
+
+	//Prints all the Tables in a database
+	void printDatabase(Database database){
+		for (int i = 0; i < tablearray.size(); i++) {
+			Table value = tablearray.get(i);
+			value.printTable(value);
+		}
+		  System.out.println();
+	}
+	
+	 //-----------------------------------------------------------//
+	//-------------------------Catalogue-------------------------//
+   //-----------------------------------------------------------//
+		
+	//prints all table headers stored in database. 
+	void getTableHeaders() {
+		for (int i = 0; i < tablearray.size(); i++) {
+			Table value = tablearray.get(i);
+			Row valuerow = value.getTable().get(0);
+			System.out.println("Table " + (i+1) + ":");
+			valuerow.rowPrint();
+			System.out.println();
+		}
+	}
+	
+	//prints all table titles
+	void getTableTitles() {
+		for (int i = 0; i < tablearray.size(); i++) {
+			Table value = tablearray.get(i);
+			String title = value.tabletitle(); 
+			System.out.println("Table " + (i+1) + " Title:   " + title);
+		}
+	}
+	
+	//select a table in database by title, return it; 
+	Table selectTableByTitle(String title) {
+		for (int i = 0; i < tablearray.size(); i++) {
+			Table value = tablearray.get(i);
+			if(value.tabletitle().contains(title)) {
+				System.out.println("Table with Title:   <<" + title + ">>   found.");
+				return value; 	
+			}}
+		System.out.println("No Table with that Title found");
+		return null; 
+	}
+	
+	Row selectRowByValue(String value) {
+		Row foundrow = new Row();
+		for (int i = 0; i < tablearray.size(); i++) {
+			foundrow = tablearray.get(i).searchRows(value);
+			System.out.println("Table:\n" + tablearray.get(i).tabletitle() + "\n Row:"  );
+			foundrow.rowPrint();
+			return foundrow;
+		}
+		System.out.println("Row not found");
+		return null; 
+	}
+	 //-----------------------------------------------------------//
+	//-------------------------Journal-------------------------//
+   //-----------------------------------------------------------//
+	
+	//while running saves a copy of the database every time it changes. 
+	static void journalRun(Database journaldb){
+		File journalsave = new File();
+		Database comparedb = new Database();
+		comparedb = journaldb; 
+
+		do {
+			journalsave.saveDB(journaldb, "src\\Files\\testjournal.ser");
+		}
+	while (comparedb.equals(journaldb) == false); 
+	}
+	
+	
+	
+	
+	 //-----------------------------------------------------------//
+	//-------------------------TESTING---------------------------//
+   //-----------------------------------------------------------//
+	
+void testCreateDatabase(){
+Database testdatabase = new Database(); 
+journalRun(testdatabase);
+Table table1 = test_Database_1();
+Table table2 = test_Database_2();
+Table table3 = test_Database_3();
+addTable(table1, testdatabase);
+addTable(table2, testdatabase);
+addTable(table3, testdatabase);
+printDatabase(testdatabase);
+
+File newfile = new File();
+Database loaddatabase = new Database(); 
+System.out.println("SERIALIZING DATABASE");
+newfile.saveDB(testdatabase, "src\\Files\\testdatabase.ser");
+System.out.println("DESERIALIZING DATABASE");
+loaddatabase = newfile.deserializeDB();
+System.out.println("PRINTING LOADED/SERIALIZED DATABASE");
+printDatabase(loaddatabase);
+
+System.out.println("SELECTING ROW BY VALUE: \"Darkness\"");
+Row selectedrow = new Row();
+selectedrow = selectRowByValue("Darkness");
+}
+	
+
+Table test_Database_1(){
+	
+	String[] testString1 = { "HEADER", "HSECOND", "HTHIRD", "HFOURTH" };
+	String[] testString2 = { "Hello", "Two", "Thirty", "Panther" };
+	String[] testString3 = { "Darkness", "SECOND", "THIRD", "FOURTH" };
+	String[] testString4 = { "My", "SECOND", "THIRD", "FOURTH" };
+	String[] testString5 = { "Old", "SECOND", "THIRD", "FOURTH" };
+	String[] testString6 = { "Friend", "SECOND", "THIRD", "FOURTH" };
+	String[] testString7 = { "...", "SECOND", "THIRD", "FOURTH" };
+	
+	Row newrow1 = new Row(testString1);
+	Table newtable = new Table(newrow1, "Test Table One");
+	
+	newtable.addRow(testString2);
+	newtable.addRow(testString3);
+	newtable.addRow(testString4);
+	newtable.addRow(testString5);
+	newtable.addRow(testString6);
+	newtable.addRow(testString7);
+	
+	return newtable; 
+}
+
+Table test_Database_2(){
+	
+	String[] testString1 = { "HEADER", "HTABLE", "HTWO", "HFOURTH" };
+	String[] testString2 = { "I've", "SECOND", "THIRD", "FOURTH" };
+	String[] testString3 = { "Come", "SECOND", "THIRD", "FOURTH" };
+	String[] testString4 = { "To", "SECOND", "THIRD", "FOURTH" };
+	String[] testString5 = { "Talk", "SECOND", "THIRD", "FOURTH" };
+	String[] testString6 = { "With", "SECOND", "THIRD", "FOURTH" };
+	String[] testString7 = { "You", "SECOND", "THIRD", "FOURTH" };
+	String[] testString8 = { "Again", "Eh?", "THIRD", "FOURTH" };
+	
+	Row newrow1 = new Row(testString1);
+	Table newtable = new Table(newrow1, "Test Table Two");
+	
+	newtable.addRow(testString2);
+	newtable.addRow(testString3);
+	newtable.addRow(testString4);
+	newtable.addRow(testString5);
+	newtable.addRow(testString6);
+	newtable.addRow(testString7);
+	newtable.addRow(testString8);
+	return newtable;
+
+}
+
+Table test_Database_3(){
+	
+	String[] testString1 = { "HEADER", "HTABLE", "HTHREE", "HFOURTH" };
+	String[] testString2 = { "Because", "SECOND", "THIRD", "FOURTH" };
+	String[] testString3 = { "A", "SECOND", "THIRD", "FOURTH" };
+	String[] testString4 = { "Visions", "SECOND", "THIRD", "FOURTH" };
+	String[] testString5 = { "Softly", "SECOND", "THIRD", "FOURTH" };
+	String[] testString6 = { "Sleeping", "SECOND", "THIRD", "FOURTH" };
+
+	
+	Row newrow1 = new Row(testString1);
+	Table newtable = new Table(newrow1, "Test Table Three");
+	
+	newtable.addRow(testString2);
+	newtable.addRow(testString3);
+	newtable.addRow(testString4);
+	newtable.addRow(testString5);
+	newtable.addRow(testString6);
+
+	return newtable;
+}
+	
+void test(){
+	System.out.println("Creating Database");
+	testCreateDatabase();
+	System.out.println();
+	System.out.println("Printing Table Headers");
+	getTableHeaders();
+	System.out.println("Printing Table Titles");
+	getTableTitles();
+	Table findtitle = selectTableByTitle("Test Table Three");
+	findtitle.printTable(findtitle);
+	
+}
+
+public static void main(String[] args) {
+	Database database = new Database();
+	database.run(args);
+}
+
+private void run(String[] args) {
+	if (args.length == 0) test();
+	else if (args.length >= 1) {
+		System.out.println("creating database");
+	}
+}
+
+
+}

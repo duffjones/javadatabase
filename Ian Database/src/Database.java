@@ -1,23 +1,28 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Database implements Serializable{
 	
-	private ArrayList<Table> tablearray;
+	private ArrayList<Table> tablearray = new ArrayList<Table>();;
 	
 	Database(){	tablearray = new ArrayList<Table>();}
 	
 	//Database constructor that populates Datebase with Table. 
-	Database(Table table){
-		tablearray = new ArrayList<Table>();
-		tablearray.add(table);
-	}
+	Database(Table table){tablearray.add(table);}
 	
 	//Adds a Table to the chosen database. 
 	void addTable(Table table, Database database){
 		tablearray.add(table);
 	}
-	
+
+	//remove a table from database
+	void removeTable(Table table, Database database){
+		tablearray.remove(table);
+	}
+
 	//Prints all the Tables in a database
 	void printDatabase(Database database){
 		for (int i = 0; i < tablearray.size(); i++) {
@@ -26,13 +31,10 @@ public class Database implements Serializable{
 		}
 		  System.out.println();
 	}
-	
-	
-	
-	 //-----------------------------------------------------------//
+
 	//-------------------------Catalogue-------------------------//
-   //-----------------------------------------------------------//
-		
+
+	
 	//prints all table headers stored in database. 
 	void getTableHeaders() {
 		for (int i = 0; i < tablearray.size(); i++) {
@@ -65,12 +67,46 @@ public class Database implements Serializable{
 		return null; 
 	}
 	
+	Row selectRowByValue(String value) {
+		Row foundrow = new Row();
+		for (int i = 0; i < tablearray.size(); i++) {
+			foundrow = tablearray.get(i).searchRows(value);
+			System.out.println("Table:\n" + tablearray.get(i).tabletitle() + "\n Row:"  );
+			foundrow.rowPrint();
+			return foundrow;
+		}
+		System.out.println("Row not found");
+		return null; 
+	}
+
+	//-------------------------Journal-------------------------//
+	
+	//saves journaldb to a file every 60 seconds, for up to an hour, 
+	//then overwrites the oldest file saved. 
+	
+	void journalRun(Database journaldb) {
+			File journalsave = new File();
+		    Runnable runnable = new Runnable() {
+		    	int i; 
+		      public void run() {
+		    	  journalsave.saveDB(journaldb, "src\\Files\\Journal\\testjournal" + i +".ser");
+		    	  System.out.println("Saving to Journal!!");
+		    	  i++;
+		    	  if (i >= 60) { i = 0;}
+		      }
+		    };
+		    ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+		    service.scheduleAtFixedRate(runnable, 1, 60, TimeUnit.SECONDS);
+	}
+	
+	
 	 //-----------------------------------------------------------//
 	//-------------------------TESTING---------------------------//
    //-----------------------------------------------------------//
 	
 void testCreateDatabase(){
 Database testdatabase = new Database(); 
+//journalRun(testdatabase); //previously tested, disabled for convenience. 
 Table table1 = test_Database_1();
 Table table2 = test_Database_2();
 Table table3 = test_Database_3();
@@ -81,16 +117,22 @@ printDatabase(testdatabase);
 
 File newfile = new File();
 Database loaddatabase = new Database(); 
-newfile.saveDB(testdatabase);
-loaddatabase = newfile.deserializeDB();
-System.out.println("PRINTING LOADED DATABASE");
+System.out.println("SERIALIZING DATABASE");
+newfile.saveDB(testdatabase, "src\\Files\\testdatabase.ser");
+System.out.println("DESERIALIZING DATABASE");
+loaddatabase = newfile.deserializeDB("src\\Files\\testdatabase.ser");
+System.out.println("PRINTING LOADED/SERIALIZED DATABASE");
 printDatabase(loaddatabase);
+
+System.out.println("SELECTING ROW BY VALUE: \"Darkness\"");
+Row selectedrow = new Row();
+selectedrow = selectRowByValue("Darkness");
 }
 	
 
 Table test_Database_1(){
 	
-	String[] testString1 = { "HEADER", "SECOND", "THIRD", "FOURTH" };
+	String[] testString1 = { "HEADER", "HSECOND", "HTHIRD", "HFOURTH" };
 	String[] testString2 = { "Hello", "Two", "Thirty", "Panther" };
 	String[] testString3 = { "Darkness", "SECOND", "THIRD", "FOURTH" };
 	String[] testString4 = { "My", "SECOND", "THIRD", "FOURTH" };
@@ -113,7 +155,7 @@ Table test_Database_1(){
 
 Table test_Database_2(){
 	
-	String[] testString1 = { "HEADER", "TABLE", "TWO", "FOURTH" };
+	String[] testString1 = { "HEADER", "HTABLE", "HTWO", "HFOURTH" };
 	String[] testString2 = { "I've", "SECOND", "THIRD", "FOURTH" };
 	String[] testString3 = { "Come", "SECOND", "THIRD", "FOURTH" };
 	String[] testString4 = { "To", "SECOND", "THIRD", "FOURTH" };
@@ -132,14 +174,13 @@ Table test_Database_2(){
 	newtable.addRow(testString6);
 	newtable.addRow(testString7);
 	newtable.addRow(testString8);
-
 	return newtable;
 
 }
 
 Table test_Database_3(){
 	
-	String[] testString1 = { "HEADER", "TABLE", "THREE", "FOURTH" };
+	String[] testString1 = { "HEADER", "HTABLE", "HTHREE", "HFOURTH" };
 	String[] testString2 = { "Because", "SECOND", "THIRD", "FOURTH" };
 	String[] testString3 = { "A", "SECOND", "THIRD", "FOURTH" };
 	String[] testString4 = { "Visions", "SECOND", "THIRD", "FOURTH" };
@@ -160,11 +201,16 @@ Table test_Database_3(){
 }
 	
 void test(){
+	System.out.println("Creating Database");
 	testCreateDatabase();
+	System.out.println();
+	System.out.println("Printing Table Headers");
 	getTableHeaders();
+	System.out.println("Printing Table Titles");
 	getTableTitles();
 	Table findtitle = selectTableByTitle("Test Table Three");
 	findtitle.printTable(findtitle);
+	
 }
 
 public static void main(String[] args) {

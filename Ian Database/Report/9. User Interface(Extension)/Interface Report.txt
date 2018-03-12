@@ -19,13 +19,15 @@ If I had time to continue I would separate out methods for each method in my oth
 
 
 EXAMPLE INTERACTION FROM TERMINAL:
+scanner/inputs are indicated by '>'
+----------------------------------
 
 DATABASE COMMANDS: 
 1. Create Table
 2. Create Row
 3. Create DataBase
 Enter choice:
->3
+	>3
 Creating Database, a test Table will be added:
 SECOND MENU:
 1. CREATE A TABLE
@@ -33,7 +35,7 @@ SECOND MENU:
 3. SELECT A TABLE
 4. PRINT A TABLE
 5. PRINT TABLE TITLES
->5
+	>5
 Printing Table Titles...
 Table 1 Title:   Test Table One
 SECOND MENU:
@@ -42,9 +44,9 @@ SECOND MENU:
 3. SELECT A TABLE
 4. PRINT A TABLE
 5. PRINT TABLE TITLES
->4
+	>4
 Enter the Title of the Table you would like to Search...
->Test Table One
+	>Test Table One
 Table with Title:   <<Test>>   found.
 TITLE:Test Table One
          ID        NAME        KIND       Owner  KEY-1532624 
@@ -58,21 +60,21 @@ SECOND MENU:
 3. SELECT A TABLE
 4. PRINT A TABLE
 5. PRINT TABLE TITLES
-2
+	>2
 Creating Row...
 Enter Number of Columns
-4
+	>4
 Enter Row Field:
-he
+	>he
 Enter Row Field:
-he
+	>he
 Enter Row Field:
-he
+	>he
 Enter Row Field:
-he
+	>he
 Printing your row:
          he          he          he          he          KEY-1068011 Add to table? Enter table name:
->Test Table One
+	>Test Table One
 Table with Title:   <<Test>>   found.
 SECOND MENU:
 1. CREATE A TABLE
@@ -80,9 +82,9 @@ SECOND MENU:
 3. SELECT A TABLE
 4. PRINT A TABLE
 5. PRINT TABLE TITLES
-4
+	>4
 Enter the Title of the Table you would like to Search...
->Test Table One
+	>Test Table One
 Table with Title:   <<Test>>   found.
 TITLE:Test Table One
          ID        NAME        KIND       Owner  KEY-1532624 
@@ -90,10 +92,3 @@ TITLE:Test Table One
           2       Wanda        fish       ef789  KEY-1997419 
           3    Garfield         cat       ab123  KEY-1588853 
          he          he          he          he  KEY-1068011 
-
-SECOND MENU:
-1. CREATE A TABLE
-2. CREATE A ROW
-3. SELECT A TABLE
-4. PRINT A TABLE
-5. PRINT TABLE TITLES

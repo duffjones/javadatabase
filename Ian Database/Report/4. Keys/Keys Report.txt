@@ -14,6 +14,8 @@ If I search ArrayList<Integer> for a key, I can return its element number, and s
 
 -Current issue with that is that the key is not saved to a file when I serialize. I will need to refactor my print function to save keys. This also makes me realize that I might create a second way to store files with my print function that will make them readable in English. 
 
+-Eventually I changes Row to be an object that can be stored in Table, rather than just a String[]. This allowed me to store keys both in the Row and in the Table. Now I can check if a key exists when I'm creating a Row() in Table(), while also preserving the keys, not generating new ones, when I serialize my objects. 
+
 
 
 KeyGen code: 

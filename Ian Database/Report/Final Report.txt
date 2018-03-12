@@ -1,36 +1,70 @@
-Database Assignment
+Database Assignment (JAVA)
 -------------------
 
 Program Overview:
 -----------------
 	The program contains 4 Java files: Row, Table, Database, and File. Each is run independantly for testing through its respective main() with no arguments. Row.java creates an ArrayList<String> for holding fields of data. Row contains methods for changing a row(adding, updating, etc) and printing a row. Table.java creates an ArrayList<Row>, a dynamic array of our Object type Row. Table also has complementary methods that manipulate a table: by adding a row, updating a row, removing a row, adding a column, etc. Database.class stores Tables in an ArrayList, and provides methods to print, search, add and remove tables. File.class handles serializing and deserializing both Tables and Databases to .ser files. 	
+
 	
 Planning:
 --------- 
-	Since a part of the assignment description called for us to avoid "reading about a stage until you have finished the previous ones", planning was done incrementally at the beginning of each stage. 
+	Since part of the assignment description called for us to avoid "reading about a stage until you have finished the previous ones", planning was done incrementally at the beginning of each stage. 
 	Row, without consideration for the future stages, was quite different in planning than its final implementation -- since I wasn't considering how its values could be accessed, or changed, especially when interacting with other classes. What was planned as a simple Array holding Strings, turned into String[], ArrayList<String>, with final considerations for a method of storage involving hashing. My original plan was simple, an array with a few methods to search it and change values. Eventually I would need keys, headers, get/return methods, etc... but I wouldn't find out about that until later. 
 	Learning from the mistakes of having to refactor Row.java for the addition of Table.java, I tried to look forward a bit moving forward from Tables. Eventually I planned to keep a similar structure of storing objects in ArrayList<Object> for every .java file.
 
 Reports:
+--------
 	Planning is discussed further in each stage of my "Report" files. There should be a corresponding .txt file with thoughts on development, summary of some problems I faced, descriptions of refactoring, and relevant code snippets. 
 
 Functions: 
 
 -Row
+	Row() Constructor - creates a new row containing an ArrayList<String> 	that holds fields. Creates a key with genRandom that is stored in the 		String key; 
+	rowPrint()- Prints the row to terminal. 
+	rowCount()- Returns the number of elements in a row. 
+	rowChange()-Replaces a field of the row in a specified position. 
+	rowDelete()-Deletes a row. 
+	rowAddCol()-Adds a column to a row. 
+
 -Table
+	Table() Constructor - Creates a new Table object containing an ArrayList 	of Rows, an int headersize that stores the number of elements in a row, 		an ArrayList of String Keys, and a String Title for the table. 
+	addRow()-Adds a specified Row to the table if it fits. 
+	addColumn()-Adds a column to every row in the Table. 
+	deleteRow()-Removed a row from the table. 
+	selectRow()-Selects a row, prints it, and stores its key as 		'selectedkey' for future reference/targeting.
+	updateRow()-Replaces a Row with another Row. 
+	printTable()-Prints the Table to terminal. 
+
 -File
+	saveTable()-serializes a table object to a .ser file in Files\testtable
+	saveDB()-serializes a database object to a .ser file in Files	\testdatabase
+	deserialize()/deserializeDB()- reads a .ser file and returns the object 	stored in the file so it can be used. Keys are preserved. 
+	
 -Database
+	Database Constructor - Creates an obect with an ArrayList of Tables. 
+	addTable() - Adds a Table to a database. 
+	removeTable() - Removed a Table from database. 
+	printDatabase() - Prints all the Tables in a database. 
+	
+	getTableHeaders() - prints the headers of all tables. 
+	getTableTitles() - prints the Titles of all tables. 
+	selectTableByTitle()- selects/returns a Table with specifed Title. 
+	
 -(planned) Interface
 
 Issues: 
 
 -Hash vs ArrayList
+	One interesting distinction I'd like to explore further is the difference in using Hash (O(1)) vs ArrayList(O(n)), as well as potential alternatives. It is my general understanding that Hashing allows for much faster, more precise searching, especially for unique values -- while using significantly more memory. While ArrayList is little more than a dynamic list, with FIFO ordering -- but seems to work great for smaller ammounts of data. Hashing seems like it would be great for matching values with a key, and searching huge databases. 
+
 -File Writing vs Serialization 
+	I slightly regret not writing to text file, as it would have made things really easy to go in and edit by hand. It would also let me author databases much quicker than using my rowAdd/tableAdd functions or defining fields as strings and inserting them in the code. However, I still find serializing to binary to be interesting as it conveniently stores a copy of my object, which seems much less prone to errors than writing text, and then parsing it back in. 
 
 Changes I would make:
--Hash
--Refactoring
--Consolidation of arguments
--Finish Interface
+-Switch from ArrayList to hashing in some places.
+-Further refactoring of methods to remove common/redundant code. Extraction of test methods into a Test.class. 
+-Consolidation of arguments that may be redundant. 
+-Finish Interface. 
+-Increase abilities to act on multiple selections. 
 
 

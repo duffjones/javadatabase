@@ -4,11 +4,11 @@ import java.io.*;
 public class File  {
 
 
-	void saveTable(Table table) {
+	void saveTable(Table table, String destination) {
 		
 		//should create a new file if one exists with name, or if file is empty. 
 		try {
-			FileOutputStream fileOut = new FileOutputStream("src\\Files\\testtable.ser");
+			FileOutputStream fileOut = new FileOutputStream(destination);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(table);
 			out.close();
@@ -18,27 +18,28 @@ public class File  {
 			i.printStackTrace();
 		}
 	}
+
 	
-	void saveDB(Database database) {
+	void saveDB(Database database, String destination) {
 		//should create a new file if one exists with name, or if file is empty. 
 		try {
-			FileOutputStream fileOut = new FileOutputStream("src\\Files\\testdatabase.ser");
+			FileOutputStream fileOut = new FileOutputStream(destination);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(database);
 			out.close();
 			fileOut.close();
-			System.out.println("Serialized data is saved in src\\Files\\testdatabase.ser");
+			System.out.println("Serialized data is saved in " +  destination);
 		} catch (IOException i) {
 			i.printStackTrace();
 		}
 	}
 
 	//opens binary file created by save, reads it in, and returns the saved object
-	Table deserialize() {
+	Table deserialize(String location) {
 		Table tableser = null;
 		System.out.println("ATTEMPTING TO LOAD TABLE...");
 		try {
-			FileInputStream fileIn = new FileInputStream("src\\Files\\testtable.ser");
+			FileInputStream fileIn = new FileInputStream(location);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			tableser = (Table) in.readObject();
 			in.close();
@@ -57,11 +58,11 @@ public class File  {
 		return tableser; 
 	}
 	
-	Database deserializeDB() {
+	Database deserializeDB(String location) {
 		Database dbser = null;
 		System.out.println("ATTEMPTING TO LOAD DATABASE...");
 		try {
-			FileInputStream fileIn = new FileInputStream("src\\Files\\testdatabase.ser");
+			FileInputStream fileIn = new FileInputStream(location);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			dbser = (Database) in.readObject();
 			in.close();
@@ -79,3 +80,4 @@ public class File  {
 	
 }
 
+//ALL METHODS ARE TESTED IN TABLE.JAVA; 

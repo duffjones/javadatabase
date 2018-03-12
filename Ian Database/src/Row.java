@@ -1,47 +1,26 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 import java.io.Serializable;
 
 class Row implements Serializable {
 
-	private ArrayList<String> field;
-	private String key;
+	private ArrayList<String> field = new ArrayList<String>();;
+	private String key = genRandom();
 
-	ArrayList<String> field() {
-		return field;
-	}
+	ArrayList<String> field() {return field;}
+	String key() {return key;}
 
-	String key() {
-		return key;
-	}
-
-	Row(String[] data) {
-		field = new ArrayList<String>();
-		Collections.addAll(field, data);
-		key = genRandom();
-	}
-
-	Row(ArrayList<String> data) {
-		field = new ArrayList<String>();
-		field = data;
-		key = genRandom();
-	}
-
-	Row() {
-	}
-
-	String getElement(int elementplace) {
-		return field.get(elementplace);
-	}
+	Row() {}
+	Row(String[] data) {Collections.addAll(field, data);}
+	Row(ArrayList<String> data) {field = data;}
 
 	// Generates a random int for our Key, and converts it to a string.
 	String genRandom() {
 		int rando = new Random().nextInt(1000000) + 999999;
 		String randomstr = "KEY-";
 		randomstr = randomstr + Integer.toString(rando);
-		return randomstr;// or may be cache random instance
+		return randomstr;
 	}
 
 	// Prints a Row with spacing/formatting.
@@ -53,6 +32,8 @@ class Row implements Serializable {
 		System.out.printf(" %10s ", key);
 	}
 
+	String getElement(int elementplace) {return field.get(elementplace);}
+	
 	// counts elements in a Row.
 	int rowCount() {
 		int count = field.size();
@@ -64,34 +45,67 @@ class Row implements Serializable {
 		field.set(element, string);
 	}
 	
+	// Deletes a row field
+	void rowDelete(int element) {
+		field.set(element, "empty");
+	}
+	
 	// Add a single element in a row;
 	void rowAddCol( String string) {
 		field.add(string);
 	}
 
+	//checks if a row contains a string value
+	boolean rowContains(String string) {
+		if(field.contains(string)) {
+			return true;
+		}
+		else return false; 
+	}
 
 	// -----------------------------------------------------------//
-	// -------------------------TESTING---------------------------//
-	// -----------------------------------------------------------//
+   // -------------------------TESTING---------------------------//
+  // -----------------------------------------------------------//
 
 
 	Row testCreateRow() {
-		String[] myStringArray = { "a", "b", "c" };
+		String[] myStringArray = { "Test A", "Test B", "Test c" };
 		Row newrow = new Row(myStringArray);
 		return newrow;
 	}
 
 	void test() {
+		
+		//creates new row and prints it
 		Row newrow = testCreateRow();
 		newrow.rowPrint();
-		// testPrint(field);
+		System.out.println();
+		
+		System.out.println("Testing Add Column");
+		newrow.rowAddCol("Add Column");
+		newrow.rowPrint();
+		
+		System.out.println("\n Testing Change Element");
+		newrow.rowChange(0, "New A");
+		newrow.rowPrint();
+		newrow.rowCount();
+	
+		System.out.println("\n Testing Find Element");
+		if(newrow.rowContains("New A") == true) {System.out.println("ELEMENT FOUND");};
+		
+		System.out.println("\n Testing Delete Element");
+		newrow.rowDelete(1);
+		newrow.rowPrint();
+		newrow.rowCount();
+		
+		
 	}
 
 	void run(String[] args) {
 		if (args.length == 0)
 			test();
 		else if (args.length >= 1) {
-			System.out.println("creating record");
+			System.out.println("This Class Doesn't Take Arguments");
 		}
 	}
 
