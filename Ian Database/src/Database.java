@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 public class Database implements Serializable{
 	
 	private ArrayList<Table> tablearray = new ArrayList<Table>();;
-	
 	Database(){	tablearray = new ArrayList<Table>();}
 	
 	//Database constructor that populates Datebase with Table. 
@@ -31,10 +30,9 @@ public class Database implements Serializable{
 		}
 		  System.out.println();
 	}
-
-	//-------------------------Catalogue-------------------------//
-
-	
+							 
+							//-----Catalogue-----//
+						   
 	//prints all table headers stored in database. 
 	void getTableHeaders() {
 		for (int i = 0; i < tablearray.size(); i++) {
@@ -48,6 +46,7 @@ public class Database implements Serializable{
 	
 	//prints all table titles
 	void getTableTitles() {
+		if(tablearray.size() == 0) { System.out.println("ERROR: No Tables Found");}
 		for (int i = 0; i < tablearray.size(); i++) {
 			Table value = tablearray.get(i);
 			String title = value.tabletitle(); 
@@ -71,7 +70,7 @@ public class Database implements Serializable{
 		Row foundrow = new Row();
 		for (int i = 0; i < tablearray.size(); i++) {
 			foundrow = tablearray.get(i).searchRows(value);
-			System.out.println("Table:\n" + tablearray.get(i).tabletitle() + "\n Row:"  );
+			System.out.println("TABLE:   " + tablearray.get(i).tabletitle() + "   ROW:   ");
 			foundrow.rowPrint();
 			return foundrow;
 		}
@@ -79,10 +78,10 @@ public class Database implements Serializable{
 		return null; 
 	}
 
-	//-------------------------Journal-------------------------//
+	                          //-----Journal-----//
 	
 	//saves journaldb to a file every 60 seconds, for up to an hour, 
-	//then overwrites the oldest file saved. 
+	//then overwrites the oldest file saved. Just a basic idea -- could be implemented further. 
 	
 	void journalRun(Database journaldb) {
 			File journalsave = new File();
@@ -105,6 +104,7 @@ public class Database implements Serializable{
    //-----------------------------------------------------------//
 	
 void testCreateDatabase(){
+//Creates a database from three tables. 
 Database testdatabase = new Database(); 
 //journalRun(testdatabase); //previously tested, disabled for convenience. 
 Table table1 = test_Database_1();
@@ -115,34 +115,35 @@ addTable(table2, testdatabase);
 addTable(table3, testdatabase);
 printDatabase(testdatabase);
 
+//Testing the database save and deserialize methods from File.class
 File newfile = new File();
 Database loaddatabase = new Database(); 
-System.out.println("SERIALIZING DATABASE");
+System.out.println("Serializing Database...");
 newfile.saveDB(testdatabase, "src\\Files\\testdatabase.ser");
-System.out.println("DESERIALIZING DATABASE");
+System.out.println("\nDeserializing Database");
 loaddatabase = newfile.deserializeDB("src\\Files\\testdatabase.ser");
-System.out.println("PRINTING LOADED/SERIALIZED DATABASE");
+System.out.println("\nPrinting Loaded/Deserialized Database\n");
 printDatabase(loaddatabase);
 
+//Testing row selection -- shows database object can search and retreive types stored in lowest object(Row)
 System.out.println("SELECTING ROW BY VALUE: \"Darkness\"");
 Row selectedrow = new Row();
 selectedrow = selectRowByValue("Darkness");
 }
 	
 
+//Code to populate random testing tables. 
 Table test_Database_1(){
 	
 	String[] testString1 = { "HEADER", "HSECOND", "HTHIRD", "HFOURTH" };
 	String[] testString2 = { "Hello", "Two", "Thirty", "Panther" };
-	String[] testString3 = { "Darkness", "SECOND", "THIRD", "FOURTH" };
+	String[] testString3 = { "Darkness", "Random", "THIRD", "FOURTH" };
 	String[] testString4 = { "My", "SECOND", "THIRD", "FOURTH" };
-	String[] testString5 = { "Old", "SECOND", "THIRD", "FOURTH" };
+	String[] testString5 = { "Old", "SECOND", "THIRD", "Random" };
 	String[] testString6 = { "Friend", "SECOND", "THIRD", "FOURTH" };
 	String[] testString7 = { "...", "SECOND", "THIRD", "FOURTH" };
 	
-	Row newrow1 = new Row(testString1);
-	Table newtable = new Table(newrow1, "Test Table One");
-	
+	Table newtable = new Table(testString1, "Test Table One");
 	newtable.addRow(testString2);
 	newtable.addRow(testString3);
 	newtable.addRow(testString4);
@@ -155,17 +156,16 @@ Table test_Database_1(){
 
 Table test_Database_2(){
 	
-	String[] testString1 = { "HEADER", "HTABLE", "HTWO", "HFOURTH" };
-	String[] testString2 = { "I've", "SECOND", "THIRD", "FOURTH" };
-	String[] testString3 = { "Come", "SECOND", "THIRD", "FOURTH" };
-	String[] testString4 = { "To", "SECOND", "THIRD", "FOURTH" };
-	String[] testString5 = { "Talk", "SECOND", "THIRD", "FOURTH" };
-	String[] testString6 = { "With", "SECOND", "THIRD", "FOURTH" };
-	String[] testString7 = { "You", "SECOND", "THIRD", "FOURTH" };
+	String[] testString1 = { "HEADER", "Numbers", "HTHREE", "HFOURTH" };
+	String[] testString2 = { "I've", "1", "THIRD", "FOURTH" };
+	String[] testString3 = { "Come", "23423", "THIRD", "FOURTH" };
+	String[] testString4 = { "To", "-123543", "THIRD", "FOURTH" };
+	String[] testString5 = { "Talk", "42", "THIRD", "FOURTH" };
+	String[] testString6 = { "With", "1000D", "THIRD", "FOURTH" };
+	String[] testString7 = { "You", "s234@#$", "THIRD", "FOURTH" };
 	String[] testString8 = { "Again", "Eh?", "THIRD", "FOURTH" };
 	
-	Row newrow1 = new Row(testString1);
-	Table newtable = new Table(newrow1, "Test Table Two");
+	Table newtable = new Table(testString1, "Test Table Two");
 	
 	newtable.addRow(testString2);
 	newtable.addRow(testString3);
@@ -180,7 +180,7 @@ Table test_Database_2(){
 
 Table test_Database_3(){
 	
-	String[] testString1 = { "HEADER", "HTABLE", "HTHREE", "HFOURTH" };
+	String[] testString1 = { "HEADER", "HEAD2", "HEAD3", "HEAD4" };
 	String[] testString2 = { "Because", "SECOND", "THIRD", "FOURTH" };
 	String[] testString3 = { "A", "SECOND", "THIRD", "FOURTH" };
 	String[] testString4 = { "Visions", "SECOND", "THIRD", "FOURTH" };
@@ -202,13 +202,16 @@ Table test_Database_3(){
 	
 void test(){
 	System.out.println("Creating Database");
-	testCreateDatabase();
+	testCreateDatabase();//lots of testing happens here
 	System.out.println();
-	System.out.println("Printing Table Headers");
+	System.out.println("\nPrinting Table Headers");
 	getTableHeaders();
-	System.out.println("Printing Table Titles");
+	System.out.println("\nPrinting Table Titles\n");
 	getTableTitles();
+	//testing selection methods. 
+	System.out.println("Selecting Table By Title: Test Table Three\n");
 	Table findtitle = selectTableByTitle("Test Table Three");
+	System.out.println("\nPrinting Selected Table...\n");
 	findtitle.printTable(findtitle);
 	
 }

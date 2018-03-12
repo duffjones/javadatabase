@@ -21,8 +21,8 @@ public class Interface {
 		System.out.println("1. Create Table");
 		System.out.println("2. Create Row");
 		System.out.println("3. Create DataBase");
-
 		System.out.println("Enter choice:");
+		
 		Scanner scanner = new Scanner(System.in);
 		int choice = scanner.nextInt();
 
@@ -40,7 +40,7 @@ public class Interface {
 				System.out.println("Enter Row Field:");
 				rows.add(getInput());
 			}
-
+			
 			Row newrow = new Row(rows);
 			Table newtable = new Table(newrow, title);
 			System.out.println("Printing your table:");
@@ -164,19 +164,21 @@ public class Interface {
 		SecondMenu();
 	}
 
+	//gets a Table with title from user input
 	Table getTitle(Database database) {
 		String title = getInput();
-
 		Table thistable = database.selectTableByTitle(title);
 		return thistable;
 	}
 
+	//get a user input string
 	String getInput() {
 		Scanner console = new Scanner(System.in);
 		String command = console.next();
 		return command;
 	}
 
+	//get user input as an int
 	int getInputInt() {
 		Scanner console = new Scanner(System.in);
 		int command = console.nextInt();
@@ -188,11 +190,8 @@ public class Interface {
 	}
 
 	void run(String[] args) {
-		if (args.length == 0)
-			test();
-		else if (args.length >= 1) {
-			System.out.println("creating table");
-		}
+		if (args.length == 0) test();
+		else if (args.length >= 1) {System.out.println("creating table");}
 	}
 
 	public static void main(String[] args) {

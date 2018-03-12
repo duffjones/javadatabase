@@ -25,15 +25,14 @@ class Row implements Serializable {
 
 	// Prints a Row with spacing/formatting.
 	void rowPrint() {
-
 		for (int i = 0; i < field.size(); i++) {
 			System.out.printf(" %10s ", field.get(i));
 		}
 		System.out.printf(" %10s ", key);
 	}
 
+	// returns String stored at specified element index
 	String getElement(int elementplace) {return field.get(elementplace);}
-	
 	// counts elements in a Row.
 	int rowCount() {
 		int count = field.size();
@@ -51,15 +50,13 @@ class Row implements Serializable {
 	}
 	
 	// Add a single element in a row;
-	void rowAddCol( String string) {
+	void rowAddCol(String string) {
 		field.add(string);
 	}
 
 	//checks if a row contains a string value
 	boolean rowContains(String string) {
-		if(field.contains(string)) {
-			return true;
-		}
+		if(field.contains(string)) {return true;}
 		else return false; 
 	}
 
@@ -73,32 +70,42 @@ class Row implements Serializable {
 		Row newrow = new Row(myStringArray);
 		return newrow;
 	}
+	
+	void testGenRandom() {
+		for(int i = 0; i<10; i++) {
+			System.out.println(genRandom());
+		}
+	}
+	
+	
 
 	void test() {
-		
+		System.out.println("BEGIN TESTING");
+		System.out.println("Creating new Row Object");
 		//creates new row and prints it
 		Row newrow = testCreateRow();
 		newrow.rowPrint();
 		System.out.println();
 		
-		System.out.println("Testing Add Column");
+		System.out.println("\nTesting Add Column");
 		newrow.rowAddCol("Add Column");
 		newrow.rowPrint();
 		
-		System.out.println("\n Testing Change Element");
+		System.out.println("\n\n Testing Change Element");
 		newrow.rowChange(0, "New A");
 		newrow.rowPrint();
 		newrow.rowCount();
 	
-		System.out.println("\n Testing Find Element");
-		if(newrow.rowContains("New A") == true) {System.out.println("ELEMENT FOUND");};
+		System.out.print("\n\n Testing Find Element...");
+		if(newrow.rowContains("New A") == true) {System.out.print("ELEMENT FOUND");};
 		
-		System.out.println("\n Testing Delete Element");
+		System.out.println("\n\n Testing Delete Element");
 		newrow.rowDelete(1);
 		newrow.rowPrint();
 		newrow.rowCount();
 		
-		
+		System.out.println("\n\n Testing Random Key Generator");
+		testGenRandom(); 
 	}
 
 	void run(String[] args) {
